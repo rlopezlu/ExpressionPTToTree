@@ -1,0 +1,14 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Part 1 Result{% endblock %}
+
+{% block content %}
+
+<p>
+Part 1 Result
+    In this experiment, you have received ${{Constants.endowment}} and earned ${{player.task_reward}} for a total of ${{player.final_reward}}
+</p>
+
+{% next_button %}
+
+{% endblock %}

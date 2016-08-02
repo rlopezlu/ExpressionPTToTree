@@ -1,0 +1,15 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Survey Start {% endblock %}
+
+{% block content %}
+
+<p>
+    Please use the sliders to indicate your current state:
+(1 : you are not experiencing the feeling very strongly.
+10 : you are experiencing the feeling very strongly.)
+</p>
+
+{% next_button %}
+
+{% endblock %}

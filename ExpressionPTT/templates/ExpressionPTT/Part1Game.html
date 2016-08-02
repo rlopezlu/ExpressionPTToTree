@@ -1,0 +1,15 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Part 1 Game{% endblock %}
+
+{% block content %}
+
+    <p>
+    Part 1 Game
+    </p>
+    <p>This is player {{player.id_in_group}}</p>
+    {% formfield player.task_reward with label="How much did the player earn?" %}
+
+    {% next_button %}
+
+{% endblock %}

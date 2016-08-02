@@ -1,0 +1,21 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Part 1 Result{% endblock %}
+
+{% block content %}
+
+
+
+    <p>
+        At this moment, your counterpart A is deciding what proportion of your income ({{player.task_reward}}) to transfer to his/her own account.
+    </p>
+    <p>
+    What percentage of your income do you think A will transfer into their Account?
+    (Use the slider below to set this percentage)
+    </p>
+    {% formfield  group.B_predicts with label="B predicts" %}
+
+
+{% next_button %}
+
+{% endblock %}

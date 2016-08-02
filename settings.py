@@ -64,7 +64,7 @@ AWS_SECRET_ACCESS_KEY = environ.get('AWS_SECRET_ACCESS_KEY')
 
 # e.g. EUR, CAD, GBP, CHF, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 
 # e.g. en-gb, de-de, it-it, fr-fr.
@@ -149,6 +149,7 @@ SESSION_CONFIGS = [
     {
         'name': 'ExpressionPTT',
         'display_name': "ExpressionPTT",
+        'real_world_currency_per_point': 1,
         'num_demo_participants': 2,
         'app_sequence': ['ExpressionPTT', 'payment_info'],
     },

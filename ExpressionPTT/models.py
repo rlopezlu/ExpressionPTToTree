@@ -32,10 +32,9 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    A_takes = models.CurrencyField(min=0, max=101)
-    B_predicts = models.CurrencyField(min=0, max=101)
-    B_willing = models.CurrencyField(min=0)
-
+    a_takes = models.PositiveIntegerField(min=0, max=100)
+    b_predicts = models.PositiveIntegerField(min=0, max=100)
+    b_willing = models.CurrencyField(min=0)
 
 
 class Player(BasePlayer):

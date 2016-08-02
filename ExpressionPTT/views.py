@@ -66,7 +66,7 @@ class Roles (Page):
 class TakeA(Page):
 
     form_model = models.Group
-    form_fields = ['A_takes']
+    form_fields = ['a_takes']
 
     def is_displayed(self):
         return self.player.id_in_group == 1
@@ -77,9 +77,13 @@ class TakeA(Page):
         }
 
 
+class TakeWaitPage(WaitPage):
+    pass
+
+
 class PredictB(Page):
     form_model = models.Group
-    form_fields = ['B_predicts']
+    form_fields = ['b_predicts']
 
     def is_displayed(self):
         return self.player.id_in_group == 2
@@ -95,13 +99,21 @@ class WillingnessB(Page):
         return self.player.id_in_group == 2
 
     form_model = models.Group
-    form_fields = ['B_willing']
+    form_fields = ['b_willing']
+
+    def b_willing_max(self):
+        return self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
 
     def vars_for_template(self):
         return {
             'partner': self.player.get_partner(),
-            'taken_amount': self.player.task_reward * (self.group.A_takes * .01)
+            'taken_amount': self.player.task_reward * self.group.a_takes * .01,
+            'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
         }
+
+
+class SendMessage(Page):
+    pass
 
 
 class WaitForMessage(WaitPage):
@@ -119,15 +131,17 @@ class ThankYou (Page):
 page_sequence = [
     SurveyStart,
     # SurveyWaitPage,
-    Part1,
+    # Part1,
     Part1Game,
     Part1Result,
     Part1Wait,
     Part2,
     Roles,
     TakeA,
+    TakeWaitPage,
     PredictB,
     WillingnessB,
+    SendMessage,
     WaitForMessage,
     SurveyEnd,
     ThankYou

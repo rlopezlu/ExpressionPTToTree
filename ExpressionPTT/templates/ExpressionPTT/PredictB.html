@@ -1,6 +1,6 @@
 {% extends "global/Base.html" %} {% load staticfiles otree_tags %}
 
-{% block title %} Part 1 Result{% endblock %}
+{% block title %} B predicts{% endblock %}
 
 {% block content %}
 
@@ -13,7 +13,7 @@
     What percentage of your income do you think A will transfer into their Account?
     (Use the slider below to set this percentage)
     </p>
-    {% formfield  group.B_predicts with label="B predicts" %}
+    {% formfield  group.b_predicts with label="B predicts" %}
 
 
 {% next_button %}

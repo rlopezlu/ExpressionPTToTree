@@ -1,18 +1,18 @@
 {% extends "global/Base.html" %} {% load staticfiles otree_tags %}
 
-{% block title %} Part 1 Result{% endblock %}
+{% block title %} A takes{% endblock %}
 
 {% block content %}
 
     <p>
         Being A, you are given the authority to transfer money from B's account to your own account. The maximum amount
-        of money you can collect is what B has earned as income in Part 1 (${{partner.task_reward}}).
+        of money you can collect is what B has earned as income in Part 1 ({{partner.task_reward}}).
     </p>
     <p>
     What percentage of B's income do you want to transfer to your account?
     (Use the slider below to set this percentage)
     </p>
-    {% formfield  group.A_takes with label="A takes" %}
+    {% formfield  group.a_takes with label="A takes" %}
 
 {% next_button %}
 

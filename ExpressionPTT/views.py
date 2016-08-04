@@ -8,22 +8,13 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
-class MyPage(Page):
-    pass
-
-
-class ResultsWaitPage(WaitPage):
-
-    def after_all_players_arrive(self):
-        pass
-
-
-class Results(Page):
-    pass
-
-
 class SurveyStart (Page):
-    pass
+    form_model = models.Player
+    form_fields = ['survey_response']
+
+    def before_next_page(self):
+        print('got to player response')
+        print(self.player.survey_response)
 
 
 class SurveyWaitPage (WaitPage):
@@ -31,6 +22,10 @@ class SurveyWaitPage (WaitPage):
 
 
 class Part1 (Page):
+    pass
+
+
+class Video(Page):
     pass
 
 
@@ -113,10 +108,29 @@ class WillingnessB(Page):
 
 
 class SendMessage(Page):
-    pass
+    form_model = models.Group
+    form_fields = ['b_message']
+
+    def is_displayed(self):
+        return self.player.id_in_group == 2
 
 
 class WaitForMessage(WaitPage):
+    pass
+
+
+class DisplayMessage(Page):
+    def is_displayed(self):
+        return self.player.id_in_group == 1
+
+
+class ResultsWaitPage(WaitPage):
+
+    def after_all_players_arrive(self):
+        pass
+
+
+class Results(Page):
     pass
 
 
@@ -132,6 +146,7 @@ page_sequence = [
     SurveyStart,
     # SurveyWaitPage,
     # Part1,
+    Video,
     Part1Game,
     Part1Result,
     Part1Wait,
@@ -143,6 +158,7 @@ page_sequence = [
     WillingnessB,
     SendMessage,
     WaitForMessage,
+    DisplayMessage,
+    Results,
     SurveyEnd,
-    ThankYou
 ]

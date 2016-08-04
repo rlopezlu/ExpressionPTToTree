@@ -35,11 +35,13 @@ class Group(BaseGroup):
     a_takes = models.PositiveIntegerField(min=0, max=100)
     b_predicts = models.PositiveIntegerField(min=0, max=100)
     b_willing = models.CurrencyField(min=0)
+    b_message = models.TextField()
 
 
 class Player(BasePlayer):
     task_reward = models.CurrencyField()
     final_reward = models.CurrencyField()
+    survey_response = models.CurrencyField()
 
     def get_partner(self):
         return self.get_others_in_group()[0]

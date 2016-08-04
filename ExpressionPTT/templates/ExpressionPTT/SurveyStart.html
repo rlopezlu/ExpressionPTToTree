@@ -1,15 +1,110 @@
-{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
 
-{% block title %} Survey Start {% endblock %}
+{% block title %}
+    Questionnaire
+{% endblock %}
+
+{% block styles %}
+<link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<style type="text/css">
+    .bid-slider {
+        margin: .5em auto;
+    }
+
+    .bid {
+        text-align: center;
+    }
+    .textlabel{
+        border:0;
+        color:#f6931f;
+        font-weight:bold;
+    }
+
+    .payoff {
+        margin: 1.5em 0;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static "vickrey_auction/jquery-ui/jquery-ui.min.js" %}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+
+    var input = $('#id_slide1text');
+    input.val(-1);
+    var negVal;
+
+    $("#slide1, #slide2, #slide3" ).slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 10,
+      value: 5,
+      slide: function (event, ui){
+          input.val(ui.value);
+          var tempName = '#'+this.id + "text";
+          console.log(tempName);
+          $(tempName).val(ui.value);
+          negVal = 10 - ui.value;
+          updateValues();
+          checkValid();
+      }
+    });
+    // to initialize
+    //$( "#slide1" ).slider( "value", 5 );
+    //$( "#slide2" ).slider( "value", 5 );
+    //$( "#slide3" ).slider( "value", 5 );
+    function checkValid(){
+        console.log(input.val());
+        if(input.val() != -1){
+            $("#hideNext").show();
+        }
+    };
+
+    $("#hideNext").hide();
+
+
+    function updateValues() {
+        $('.bid-value1').text($('#slide1text').val());
+        $('.bid-value2').text($('#slide2text').val() );
+        $('.bid-value1x').text(10 - $('#slide1text').val() );
+        $('.bid-value2x').text(10 - $('#slide2text').val() );
+        //$('.payoff-value').text(calculatePayoff());
+    }
+});
+</script>
+{% endblock %}
 
 {% block content %}
 
-<p>
-    Please use the sliders to indicate your current state:
-(1 : you are not experiencing the feeling very strongly.
-10 : you are experiencing the feeling very strongly.)
-</p>
 
-{% next_button %}
+    <div class="form-group required">
 
+        <div class="controls">
+
+            <div class="row">
+                <div class="col-md-2">(<span class="bid-value1x" >5</span>) Bad-mood </div>
+                <div class="col-md-8" id="slide1"></div>
+                <div class="col-md-2">Good-mood (<span class="bid-value1"  type="hidden" id="slide1text" readonly >5</span>)</div>
+                <br>
+                <input type="hidden" name="survey_response" id="id_slide1text" value="0">
+            </div>
+            </div>
+    </div>
+
+
+
+            <div class="row">
+                <div class="col-md-2">(<span class="bid-value2x">5</span>) Sad </div>
+                <div class="col-md-8" id="slide2"></div>
+                <div class="col-md-2">Happy (<span class="bid-value2">5</span>)</div>
+                <br>
+                    <input class ="textlabel" type="hidden" id="slide2text" readonly >
+            </div>
+        </div>
+    </div>
+    <div id="hideNext"  style="margin-left: 300px; display: none;">
+        {% next_button %}
+    </div>
 {% endblock %}

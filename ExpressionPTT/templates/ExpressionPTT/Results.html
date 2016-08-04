@@ -2,19 +2,53 @@
 {% load staticfiles otree_tags %}
 
 {% block title %}
-    Page title
+    Results/ Earnings
 {% endblock %}
 
 {% block content %}
 
-<!--
-Documentation on how to write a django template here:
-https://docs.djangoproject.com/en/dev/topics/templates/
+  <div class="container">
+    <h2 class="text-center">
+      Earnings (in $)</h3>
+    </h2>
+    <br>
+    <div class="row">
+      <table class="table table-striped table-bordered table-nonfluid" align="center">
+        <tr>
+          <td class="col-md-1"></td>
+          <td class="col-md-1">Role A</td>
+          <td class="col-md-1">Role B </td>
+        </tr>
+        <tr ng-if="endowment">
+          <td>Endowment</td>
+          <td class="text-center">{{Constants.endowment }}</td>
+          <td class="text-center">{{Constants.endowment }}</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td class="text-center">{{player.task_reward}}</td>
+          <td class="text-center">{{partner.task_reward}}</td>
+        </tr>
+        <tr>
+          <td>Money Transferred</td>
+          <td class="text-center">+{{group.total_taken}}</td>
+          <td class="text-center">-{{group.total_taken}}</td>
+        </tr>
+        <tr ng-if="! (nomessage || freemessage)">
+          <td>Message Price</td>
+          <td></td>
+          <td class="text-center"> </td>
+        </tr>
+        <tr>
+          <td>Total Earnings</td>
+          <td class="text-center">{{paycheck}}</td>
+          <td class="text-center">{{partner.total_pay}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-Bootstrap comes pre-loaded, so you can use any Bootstrap elements:
-http://getbootstrap.com/components/
 
--->
 
     {% next_button %}
 {% endblock %}

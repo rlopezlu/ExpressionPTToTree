@@ -2,6 +2,77 @@
 
 {% block title %} A takes{% endblock %}
 
+{% block styles %}
+<link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<style type="text/css">
+    .bid-slider {
+        margin: .5em auto;
+    }
+
+    .bid {
+        text-align: center;
+    }
+    .textlabel{
+        border:0;
+        color:#f6931f;
+        font-weight:bold;
+    }
+
+    .payoff {
+        margin: 1.5em 0;
+    }
+</style>
+{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript" src="{% static "vickrey_auction/jquery-ui/jquery-ui.min.js" %}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+
+//    var input;// = $('#id_slide1text');
+
+        $('#id_slide1text').val(null);
+        $('#slide1text').val(null);
+
+        $("#slide1").slider({
+          orientation: "horizontal",
+          max: 100,min: 0,
+            value: -1,
+          slide: function (event, ui){
+              var tempName = this.id;
+              $('#id_'+ tempName + 'text').val(ui.value);
+              ui.handle.style.display = "inline";
+              console.log(tempName);
+              $('#'+ tempName + "text").val(ui.value);
+              updateValues(tempName);
+              checkValid(tempName);
+          }
+        });
+
+    function checkValid(){
+        var myVal = $('#id_slide1text').val() ;
+        console.log(myVal);
+        if( !myVal){
+            $("#hideNext").hide();
+            return
+        } else{
+            $("#hideNext").show();
+        }
+    };
+
+    $(".ui-slider-handle").hide();
+    $("#hideNext").hide();
+
+
+    function updateValues(name) {
+        $('.' + name ).text($("#" + name + 'text').val());
+    };
+});
+
+</script>
+{% endblock %}
+
 {% block content %}
 
     <p>
@@ -12,8 +83,19 @@
     What percentage of B's income do you want to transfer to your account?
     (Use the slider below to set this percentage)
     </p>
-    {% formfield  group.a_takes with label="A takes (%) " %}
 
+    <div class="form-group required">
+        <div class="controls">
+            <div class="row">
+                <div class="col-md-1" ></div>
+                <div class="col-md-10" id="slide1"></div>
+                <input type="hidden" name="a_takes" id="id_slide1text" value="0">
+                <div class="col-md-1"><span class="slide1"  type="hidden" id="slide1text" readonly ></span>%</div>
+            </div>
+        </div>
+    </div>
+
+<div id="hideNext">
 {% next_button %}
-
+</div>
 {% endblock %}

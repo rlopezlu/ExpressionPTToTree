@@ -35,8 +35,7 @@ jQuery(document).ready(function ($) {
 //    var input;// = $('#id_slide1text');
 
     var numSliders = 6;
-    for (var iSlide = 0; iSlide<= numSliders; iSlide ++){
-        //input = $('#id_slide' + iSlide+ 'text');
+    for (var iSlide = 1; iSlide<= numSliders; iSlide ++){
 
         $('#id_slide'+ iSlide + 'text').val(null);
         $('#slide'+ iSlide+ "text").val(null);
@@ -57,11 +56,7 @@ jQuery(document).ready(function ($) {
         });
     };
 
-    // to initialize
-    //$( "#slide1" ).slider( "value", 5 );
-    //$( "#slide2" ).slider( "value", 5 );
-    //$( "#slide3" ).slider( "value", 5 );
-    function checkValid(name){
+    function checkValid(){
         var myVal
         for(var j = 1; j <= numSliders; j++){
             myVal = $('#id_slide' + j + 'text').val() ;
@@ -73,27 +68,15 @@ jQuery(document).ready(function ($) {
                 $("#hideNext").show();
             }
         }
-        //console.log(input.val());
-        //if(input.val() != -1){
-
-        //}
     };
 
-
     $(".ui-slider-handle").hide();
-
-//    $("#slide1").slider("option", "disabled", true);
-//    $("#slide1").slider("option", "disabled", true);
-
     $("#hideNext").hide();
 
 
     function updateValues(name) {
         $('.' + name).text(10 - $("#" + name + 'text').val());
         $('.' + name + 'x').text($("#" + name + 'text').val());
-        //$('.bid-value2').text($('#slide2text').val() );
-        //$('.bid-value1x').text(10 - $('#slide1text').val() );
-        //$('.bid-value2x').text(10 - $('#slide2text').val() );
     }
 });
 </script>

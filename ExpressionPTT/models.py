@@ -42,7 +42,14 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     task_reward = models.CurrencyField()
     intermediate_reward = models.CurrencyField()
-    survey_response = models.CurrencyField()
+
+    survey_response0 = models.CurrencyField()
+    survey_response1 = models.CurrencyField()
+    survey_response2 = models.CurrencyField()
+    survey_response3 = models.CurrencyField()
+    survey_response4 = models.CurrencyField()
+    survey_response5 = models.CurrencyField()
+
     total_pay = models.CurrencyField()
 
     def get_partner(self):

@@ -32,45 +32,55 @@
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
 
-    var input = $('#id_slide1text');
-    input.val(-1);
-    var negVal;
+//    var input;// = $('#id_slide1text');
 
-    $("#slide1, #slide2, #slide3" ).slider({
-      orientation: "horizontal",
-      range: "min",
-      max: 10,
-      value: 5,
-      slide: function (event, ui){
-          input.val(ui.value);
-          var tempName = '#'+this.id + "text";
-          console.log(tempName);
-          $(tempName).val(ui.value);
-          negVal = 10 - ui.value;
-          updateValues();
-          checkValid();
-      }
-    });
+    var numSliders = 6;
+    for (var iSlide = 0; iSlide<= numSliders; iSlide ++){
+        //input = $('#id_slide' + iSlide+ 'text');
+
+        $("#slide" + iSlide).slider({
+          orientation: "horizontal",
+          max: 10,min: 0,
+            value: -1,
+          slide: function (event, ui){
+              var tempName = this.id;
+              $('#id_'+ tempName + 'text').val(ui.value);
+              ui.handle.style.display = "inline";
+
+              console.log(tempName);
+              $('#'+ tempName + "text").val(ui.value);
+              updateValues(tempName);
+              checkValid();
+          }
+        });
+    };
+
     // to initialize
     //$( "#slide1" ).slider( "value", 5 );
     //$( "#slide2" ).slider( "value", 5 );
     //$( "#slide3" ).slider( "value", 5 );
     function checkValid(){
-        console.log(input.val());
-        if(input.val() != -1){
+        //console.log(input.val());
+        //if(input.val() != -1){
             $("#hideNext").show();
-        }
+        //}
     };
+
+
+    $(".ui-slider-handle").hide();
+
+//    $("#slide1").slider("option", "disabled", true);
+//    $("#slide1").slider("option", "disabled", true);
 
     $("#hideNext").hide();
 
 
-    function updateValues() {
-        $('.bid-value1').text($('#slide1text').val());
-        $('.bid-value2').text($('#slide2text').val() );
-        $('.bid-value1x').text(10 - $('#slide1text').val() );
-        $('.bid-value2x').text(10 - $('#slide2text').val() );
-        //$('.payoff-value').text(calculatePayoff());
+    function updateValues(name) {
+        $('.' + name).text(10 - $("#" + name + 'text').val());
+        $('.' + name + 'x').text($("#" + name + 'text').val());
+        //$('.bid-value2').text($('#slide2text').val() );
+        //$('.bid-value1x').text(10 - $('#slide1text').val() );
+        //$('.bid-value2x').text(10 - $('#slide2text').val() );
     }
 });
 </script>
@@ -84,24 +94,56 @@ jQuery(document).ready(function ($) {
         <div class="controls">
 
             <div class="row">
-                <div class="col-md-2">(<span class="bid-value1x" >5</span>) Bad-mood </div>
+                <div class="col-md-2">(<span class="slide1" ></span>) Good-mood </div>
                 <div class="col-md-8" id="slide1"></div>
-                <div class="col-md-2">Good-mood (<span class="bid-value1"  type="hidden" id="slide1text" readonly >5</span>)</div>
+                <div class="col-md-2">Bad-mood (<span class="slide1x" id="slide1text" type="hidden" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_response" id="id_slide1text" value="0">
+                <input type="hidden" name="survey_response0" id="id_slide1text" value="0">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">(<span class="slide2" ></span>) Happy </div>
+                <div class="col-md-8" id="slide2"></div>
+                <div class="col-md-2">Sad(<span class="slide2x"  type="hidden" id="slide2text" readonly ></span>)</div>
+                <br>
+                <input type="hidden" name="survey_response1" id="id_slide2text" value="0">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">(<span class="slide3" ></span>) Satisfied</div>
+                <div class="col-md-8" id="slide3"></div>
+                <div class="col-md-2">Depressed (<span class="slide3x"  type="hidden" id="slide3text" readonly ></span>)</div>
+                <br>
+                <input type="hidden" name="survey_response2" id="id_slide3text" value="0">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">(<span class="slide4" ></span>) Cheerful </div>
+                <div class="col-md-8" id="slide4"></div>
+                <div class="col-md-2">gloomy(<span class="slide4x"  type="hidden" id="slide4text" readonly ></span>)</div>
+                <br>
+                <input type="hidden" name="survey_response3" id="id_slide4text" value="0">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">(<span class="slide5" ></span>) Pleased</div>
+                <div class="col-md-8" id="slide5"></div>
+                <div class="col-md-2">Displeased (<span class="slide5x"  type="hidden" id="slide5text" readonly ></span>)</div>
+                <br>
+                <input type="hidden" name="survey_response4" id="id_slide5text" value="0">
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">(<span class="slide6" ></span>) Joyful </div>
+                <div class="col-md-8" id="slide6"></div>
+                <div class="col-md-2">Sorrowful (<span class="slide6x"  type="hidden" id="slide6text" readonly ></span>)</div>
+                <br>
+                <input type="hidden" name="survey_response5"  id="id_slide6text" value="0">
             </div>
             </div>
     </div>
 
 
-
-            <div class="row">
-                <div class="col-md-2">(<span class="bid-value2x">5</span>) Sad </div>
-                <div class="col-md-8" id="slide2"></div>
-                <div class="col-md-2">Happy (<span class="bid-value2">5</span>)</div>
-                <br>
-                    <input class ="textlabel" type="hidden" id="slide2text" readonly >
-            </div>
         </div>
     </div>
     <div id="hideNext"  style="margin-left: 300px; display: none;">

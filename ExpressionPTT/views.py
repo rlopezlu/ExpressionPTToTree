@@ -10,11 +10,17 @@ from .models import Constants
 
 class SurveyStart (Page):
     form_model = models.Player
-    form_fields = ['survey_response']
+    form_fields = ['survey_response0',
+                   'survey_response1',
+                   'survey_response2',
+                   'survey_response3',
+                   'survey_response4',
+                   'survey_response5',
+                   ]
 
     def before_next_page(self):
         print('got to player response')
-        print(self.player.survey_response)
+        # print(self.player.survey_response)
 
 
 class SurveyWaitPage (WaitPage):
@@ -88,6 +94,9 @@ class PredictB(Page):
             'partner': self.player.get_partner()
         }
 
+    def before_next_page(self):
+        self.group.total_taken = self.player.task_reward * self.group.a_takes * .01
+
 
 class WillingnessB(Page):
     def is_displayed(self):
@@ -108,6 +117,13 @@ class WillingnessB(Page):
             'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
         }
 
+    def before_next_page(self):
+        print(models.Constants.endowment)
+        print(self.player.task_reward)
+        print(self.group.total_taken)
+        self.player.total_pay = models.Constants.endowment + self.player.task_reward - self.group.total_taken
+        print(self.player.total_pay)
+
 
 class SendMessage(Page):
     form_model = models.Group
@@ -126,6 +142,19 @@ class DisplayMessage(Page):
         self.player.total_pay = self.player.intermediate_reward + self.player.task_reward * self.group.a_takes * .01
         return self.player.id_in_group == 1
 
+    def before_next_page(self):
+        self.player.total_pay = models.Constants.endowment + self.player.task_reward + self.group.total_taken
+
+
+class MessageReadWait(WaitPage):
+    pass
+
+
+class MessageRead(Page):
+
+    def is_displayed(self):
+        return self.player.id_in_group == 2
+
 
 class ResultsWaitPage(WaitPage):
 
@@ -139,7 +168,6 @@ class Results(Page):
             'partner': self.player.get_partner(),
             'paycheck': models.Constants.endowment + self.player.task_reward + self.group.total_taken,
         }
-
 
 
 class SurveyEnd (Page):
@@ -167,6 +195,8 @@ page_sequence = [
     SendMessage,
     WaitForMessage,
     DisplayMessage,
+    MessageReadWait,
+    MessageRead,
     Results,
     # SurveyEnd,
 ]

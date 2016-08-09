@@ -1,0 +1,23 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Display Message{% endblock %}
+
+{% block scripts %}
+
+<script type="text/javascript" src="vickrey_auction/jquery-ui/jquery-ui.min.js"></script>
+
+
+{% endblock %}
+
+{% block content %}
+   <div ng-app="testGame">
+
+       <div ng-controller="gameController">
+
+
+       </div>
+   </div>
+
+    {% next_button %}
+
+{% endblock %}

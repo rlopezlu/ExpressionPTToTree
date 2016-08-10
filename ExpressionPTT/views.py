@@ -153,12 +153,13 @@ class MessageRead(Page):
         return self.player.id_in_group == 2
 
     def before_next_page(self):
-            self.group.final_pay()
+        self.group.final_pay()
 
 
 class ResultsWaitPage(WaitPage):
-    pass
 
+    def after_all_players_arrive(self):
+        self.group.final_pay()
 
 
 class Results(Page):
@@ -170,7 +171,14 @@ class Results(Page):
 
 
 class SurveyEnd (Page):
-    pass
+    form_model = models.Player
+    form_fields = ['survey_responseA',
+                   'survey_responseB',
+                   'survey_responseC',
+                   'survey_responseD',
+                   'survey_responseE',
+                   'survey_responseF',
+                   ]
 
 
 class ThankYou (Page):
@@ -178,10 +186,10 @@ class ThankYou (Page):
 
 
 page_sequence = [
-    # SurveyStart,
-    # SurveyWaitPage,
-    # Part1,
-    # Video,
+    SurveyStart,
+    SurveyWaitPage,
+    Part1,
+    Video,
     Part1Game,
     Part1Result,
     Part1Wait,
@@ -198,5 +206,5 @@ page_sequence = [
     MessageRead,
     ResultsWaitPage,
     Results,
-    # SurveyEnd,
+    SurveyEnd,
 ]

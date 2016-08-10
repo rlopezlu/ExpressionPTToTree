@@ -7,7 +7,9 @@
 
 {% block content %}
 
-  <div class="container">
+
+{% if player.id_in_group == 1 %}
+      <div class="container">
     <h2 class="text-center">
       Earnings (in $)</h3>
     </h2>
@@ -16,8 +18,8 @@
       <table class="table table-striped table-bordered table-nonfluid" align="center">
         <tr>
           <td class="col-md-1"></td>
-          <td class="col-md-1">Role A</td>
-          <td class="col-md-1">Role B </td>
+          <td class="col-md-1 text-center">Role A (You)</td>
+          <td class="col-md-1 text-center">Role B </td>
         </tr>
         <tr >
           <td>Endowment</td>
@@ -47,6 +49,56 @@
       </table>
     </div>
   </div>
+{% elif player.id_in_group == 2 %}
+      <div class="container">
+    <h2 class="text-center">
+      Earnings (in $)</h3>
+    </h2>
+    <br>
+    <div class="row">
+      <table class="table table-striped table-bordered table-nonfluid" align="center">
+        <tr>
+          <td class="col-md-1"></td>
+          <td class="col-md-1 text-center" >Role A</td>
+          <td class="col-md-1 text-center">Role B (You)</td>
+        </tr>
+        <tr >
+          <td>Endowment</td>
+          <td class="text-center">{{Constants.endowment }}</td>
+          <td class="text-center">{{Constants.endowment }}</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td class="text-center">{{partner.task_reward}}</td>
+          <td class="text-center">{{player.task_reward}}</td>
+        </tr>
+        <tr>
+          <td>Money Transferred</td>
+          <td class="text-center">+{{group.total_taken}}</td>
+          <td class="text-center">-{{group.total_taken}}</td>
+        </tr>
+        <tr >
+          <td>Message Price</td>
+          <td class="text-center">None</td>
+          <td class="text-center">{{group.b_message_price}}</td>
+        </tr>
+        <tr>
+          <td>Total Earnings</td>
+          <td class="text-center">{{partner.final_reward}}</td>
+          <td class="text-center">{{player.final_reward}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+{% else %}
+
+<p>You are neither A nor B</p>
+{% endif %}
+
+
+
+
 
 
 

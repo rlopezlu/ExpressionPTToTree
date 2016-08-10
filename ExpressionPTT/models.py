@@ -59,12 +59,19 @@ class Player(BasePlayer):
     final_reward = models.CurrencyField()
     total_pay = models.CurrencyField()
 
-    survey_response0 = models.CurrencyField()
-    survey_response1 = models.CurrencyField()
-    survey_response2 = models.CurrencyField()
-    survey_response3 = models.CurrencyField()
-    survey_response4 = models.CurrencyField()
-    survey_response5 = models.CurrencyField()
+    survey_response0 = models.IntegerField()
+    survey_response1 = models.IntegerField()
+    survey_response2 = models.IntegerField()
+    survey_response3 = models.IntegerField()
+    survey_response4 = models.IntegerField()
+    survey_response5 = models.IntegerField()
+
+    survey_responseA = models.IntegerField()
+    survey_responseB = models.IntegerField()
+    survey_responseC = models.IntegerField()
+    survey_responseD = models.IntegerField()
+    survey_responseE = models.IntegerField()
+    survey_responseF = models.IntegerField()
 
     def get_partner(self):
         return self.get_others_in_group()[0]

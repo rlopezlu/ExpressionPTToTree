@@ -106,8 +106,6 @@ class WillingnessB(Page):
     form_fields = ['b_willing']
 
     def b_willing_max(self):
-        #         self.group.total_taken = self.player.task_reward * self.group.a_takes * .01
-        #         self.player.total_pay = self.player.intermediate_reward - self.player.task_reward * self.group.a_takes * .01
         return self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
 
     def vars_for_template(self):
@@ -117,12 +115,11 @@ class WillingnessB(Page):
             'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
         }
 
-    '''def before_next_page(self):
-        print(models.Constants.endowment)
-        print(self.player.task_reward)
-        print(self.group.total_taken)
-        self.player.total_pay = models.Constants.endowment + self.player.task_reward - self.group.total_taken
-        print(self.player.total_pay)'''
+    def before_next_page(self):
+        if self.group.b_message_price <= self.group.b_willing:
+            self.group.b_charged = True
+        else:
+            self.group.b_charged = False
 
 
 class SendMessage(Page):
@@ -130,7 +127,7 @@ class SendMessage(Page):
     form_fields = ['b_message']
 
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.player.id_in_group == 2 and self.group.b_charged
 
 
 class WaitForMessage(WaitPage):

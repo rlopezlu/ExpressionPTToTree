@@ -3,6 +3,7 @@
 from __future__ import division
 
 import random
+import decimal
 
 import otree.models
 from otree.db import models
@@ -23,12 +24,13 @@ class Constants(BaseConstants):
     name_in_url = 'ExpressionPTT'
     players_per_group = 2
     num_rounds = 1
-
     endowment = c(3)
 
 
 class Subsession(BaseSubsession):
-    pass
+
+    def before_session_starts(self):
+        self.get_groups()[0].b_message_price = random.randrange(0, 300)/100
 
 
 class Group(BaseGroup):
@@ -37,13 +39,18 @@ class Group(BaseGroup):
     b_predicts = models.PositiveIntegerField(min=0, max=100)
     b_willing = models.CurrencyField(min=0)
     b_message = models.TextField()
-    b_message_price = c(3)
+    b_message_price = models.DecimalField(max_digits=5, decimal_places=2)
+    b_charged = models.BooleanField()
 
     def final_pay(self):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
         p1.final_reward = Constants.endowment + p1.task_reward + self.total_taken
-        p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken
+
+        if self.b_charged:
+            p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken - self.b_message_price
+        else:
+            p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken
 
 
 class Player(BasePlayer):

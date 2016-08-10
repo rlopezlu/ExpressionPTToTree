@@ -106,8 +106,8 @@ class WillingnessB(Page):
     form_fields = ['b_willing']
 
     def b_willing_max(self):
-        self.group.total_taken = self.player.task_reward * self.group.a_takes * .01
-        self.player.total_pay = self.player.intermediate_reward - self.player.task_reward * self.group.a_takes * .01
+        #         self.group.total_taken = self.player.task_reward * self.group.a_takes * .01
+        #         self.player.total_pay = self.player.intermediate_reward - self.player.task_reward * self.group.a_takes * .01
         return self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
 
     def vars_for_template(self):
@@ -117,12 +117,12 @@ class WillingnessB(Page):
             'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
         }
 
-    def before_next_page(self):
+    '''def before_next_page(self):
         print(models.Constants.endowment)
         print(self.player.task_reward)
         print(self.group.total_taken)
         self.player.total_pay = models.Constants.endowment + self.player.task_reward - self.group.total_taken
-        print(self.player.total_pay)
+        print(self.player.total_pay)'''
 
 
 class SendMessage(Page):
@@ -155,11 +155,13 @@ class MessageRead(Page):
     def is_displayed(self):
         return self.player.id_in_group == 2
 
+    def before_next_page(self):
+            self.group.final_pay()
+
 
 class ResultsWaitPage(WaitPage):
+    pass
 
-    def after_all_players_arrive(self):
-        pass
 
 
 class Results(Page):
@@ -179,10 +181,10 @@ class ThankYou (Page):
 
 
 page_sequence = [
-    SurveyStart,
+    # SurveyStart,
     # SurveyWaitPage,
     # Part1,
-    Video,
+    # Video,
     Part1Game,
     Part1Result,
     Part1Wait,
@@ -197,6 +199,7 @@ page_sequence = [
     DisplayMessage,
     MessageReadWait,
     MessageRead,
+    ResultsWaitPage,
     Results,
     # SurveyEnd,
 ]

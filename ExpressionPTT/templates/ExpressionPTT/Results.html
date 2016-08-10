@@ -19,7 +19,7 @@
           <td class="col-md-1">Role A</td>
           <td class="col-md-1">Role B </td>
         </tr>
-        <tr ng-if="endowment">
+        <tr >
           <td>Endowment</td>
           <td class="text-center">{{Constants.endowment }}</td>
           <td class="text-center">{{Constants.endowment }}</td>
@@ -34,15 +34,15 @@
           <td class="text-center">+{{group.total_taken}}</td>
           <td class="text-center">-{{group.total_taken}}</td>
         </tr>
-        <tr ng-if="! (nomessage || freemessage)">
+        <tr >
           <td>Message Price</td>
-          <td></td>
-          <td class="text-center"> </td>
+          <td class="text-center">None</td>
+          <td class="text-center">{{group.b_message_price}}</td>
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{player.total_pay}}</td>
-          <td class="text-center">{{partner.total_pay}}</td>
+          <td class="text-center">{{player.final_reward}}</td>
+          <td class="text-center">{{partner.final_reward}}</td>
         </tr>
       </table>
     </div>

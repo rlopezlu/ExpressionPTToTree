@@ -37,11 +37,20 @@ class Group(BaseGroup):
     b_predicts = models.PositiveIntegerField(min=0, max=100)
     b_willing = models.CurrencyField(min=0)
     b_message = models.TextField()
+    b_message_price = c(3)
+
+    def final_pay(self):
+        p1 = self.get_player_by_id(1)
+        p2 = self.get_player_by_id(2)
+        p1.final_reward = Constants.endowment + p1.task_reward + self.total_taken
+        p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken
 
 
 class Player(BasePlayer):
     task_reward = models.CurrencyField()
     intermediate_reward = models.CurrencyField()
+    final_reward = models.CurrencyField()
+    total_pay = models.CurrencyField()
 
     survey_response0 = models.CurrencyField()
     survey_response1 = models.CurrencyField()
@@ -50,10 +59,5 @@ class Player(BasePlayer):
     survey_response4 = models.CurrencyField()
     survey_response5 = models.CurrencyField()
 
-    total_pay = models.CurrencyField()
-
     def get_partner(self):
         return self.get_others_in_group()[0]
-
-
-

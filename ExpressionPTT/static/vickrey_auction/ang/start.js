@@ -134,13 +134,13 @@ angular.module('Game', []).controller("gameController",
     };
 
     $scope.nexttask = function() {
-
         console.log("task ", $scope.task);
         $scope.income += $scope.locatorState.getPointvalue();
         $scope.maxpoints = (Math.floor(Math.random() * 80) + 40);// * $scope.scale;
         $("#income").text("So far, your income is $" +
           $scope.floatToMoney($scope.income).toFixed(2) + ".");
-        $('#task_reward').val($scope.income);
+        // save income as integer
+        $('#task_reward').val($scope.floatToMoney($scope.income).toFixed(2));
         console.log('totalIncome ', $scope.income);
         console.log('saved income to div ', $('#task_reward').val());
 

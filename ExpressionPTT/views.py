@@ -7,11 +7,16 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 
+from decimal import Decimal
 
-class Angular (Page):
+
+class Part1Game (Page):
     form_model = models.Player
     form_fields = ['task_reward']
-    pass
+
+    def before_next_page(self):
+        print('got to before')
+        self.player.intermediate_reward = self.player.task_reward + models.Constants.endowment
 
 
 class SurveyStart (Page):
@@ -41,17 +46,9 @@ class Video(Page):
     pass
 
 
-class Part1Game(Page):
-    print('got to part1')
-    form_model = models.Player
-    form_fields = ['task_reward']
-
-    def before_next_page(self):
-        print('got to before')
-        self.player.intermediate_reward = self.player.task_reward + models.Constants.endowment
-
-
 class Part1Result(Page):
+    def vars_for_template(self):
+        return {'reward' : self.player.task_reward}
     pass
 
 
@@ -83,6 +80,9 @@ class TakeA(Page):
             'partner': self.player.get_partner()
         }
 
+    def before_next_page(self):
+        self.group.a_takes *= Decimal(.01)
+
 
 class TakeWaitPage(WaitPage):
     pass
@@ -101,7 +101,7 @@ class PredictB(Page):
         }
 
     def before_next_page(self):
-        self.group.total_taken = self.player.task_reward * self.group.a_takes * .01
+        self.group.total_taken = self.player.task_reward * self.group.a_takes
 
 
 class WillingnessB(Page):
@@ -112,13 +112,13 @@ class WillingnessB(Page):
     form_fields = ['b_willing']
 
     def b_willing_max(self):
-        return self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
+        return self.player.task_reward - self.player.task_reward * self.group.a_takes
 
     def vars_for_template(self):
         return {
             'partner': self.player.get_partner(),
-            'taken_amount': self.player.task_reward * self.group.a_takes * .01,
-            'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes * .01
+            'taken_amount': self.player.task_reward * self.group.a_takes,
+            'available_earnings': self.player.task_reward - self.player.task_reward * self.group.a_takes
         }
 
     def before_next_page(self):
@@ -142,7 +142,7 @@ class WaitForMessage(WaitPage):
 
 class DisplayMessage(Page):
     def is_displayed(self):
-        self.player.total_pay = self.player.intermediate_reward + self.player.task_reward * self.group.a_takes * .01
+        self.player.total_pay = self.player.intermediate_reward + self.player.task_reward * self.group.a_takes
         return self.player.id_in_group == 1
 
     def before_next_page(self):
@@ -192,7 +192,7 @@ class ThankYou (Page):
 
 
 page_sequence = [
-    Angular,
+    # Angular,
     SurveyStart,
     SurveyWaitPage,
     Part1,

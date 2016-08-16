@@ -34,7 +34,7 @@ class Subsession(BaseSubsession):
 
 
 class Group(BaseGroup):
-    a_takes = models.PositiveIntegerField(min=0, max=100)
+    a_takes = models.DecimalField(min=0, max=100, max_digits=5, decimal_places=2)
     total_taken = models.CurrencyField()
     b_predicts = models.PositiveIntegerField(min=0, max=100)
     b_willing = models.CurrencyField(min=0)
@@ -54,10 +54,10 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    task_reward = models.DecimalField(max_digits=7, decimal_places=2)
-    intermediate_reward = models.CurrencyField()
-    final_reward = models.CurrencyField()
-    total_pay = models.CurrencyField()
+    task_reward = models.DecimalField(max_digits = 5, decimal_places=2)
+    intermediate_reward = models.DecimalField(max_digits=5, decimal_places=2)
+    final_reward = models.DecimalField(max_digits=5, decimal_places=2)
+    total_pay = models.DecimalField(max_digits=5, decimal_places=2)
 
     survey_response0 = models.IntegerField()
     survey_response1 = models.IntegerField()

@@ -8,6 +8,12 @@ from ._builtin import Page, WaitPage
 from .models import Constants
 
 
+class Angular (Page):
+    form_model = models.Player
+    form_fields = ['task_reward']
+    pass
+
+
 class SurveyStart (Page):
     form_model = models.Player
     form_fields = ['survey_response0',
@@ -186,6 +192,7 @@ class ThankYou (Page):
 
 
 page_sequence = [
+    Angular,
     SurveyStart,
     SurveyWaitPage,
     Part1,

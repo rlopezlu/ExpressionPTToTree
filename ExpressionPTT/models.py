@@ -54,7 +54,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    task_reward = models.CurrencyField()
+    task_reward = models.DecimalField(max_digits=7, decimal_places=2)
     intermediate_reward = models.CurrencyField()
     final_reward = models.CurrencyField()
     total_pay = models.CurrencyField()

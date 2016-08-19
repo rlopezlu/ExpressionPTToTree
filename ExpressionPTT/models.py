@@ -30,11 +30,14 @@ class Constants(BaseConstants):
 class Subsession(BaseSubsession):
 
     def before_session_starts(self):
+        group_matrix = []
         i = 0
         for group in self.get_groups():
             group.treatment_endowment = self.session.config['endowment'][i]
             group.treatment_treatment = self.session.config['treatment'][i]
+            group_matrix.append( self.session.config['group'][i] )
             i += 1
+        self.set_groups()
         self.get_groups()[0].b_message_price = random.randrange(0, 300)/100
 
 

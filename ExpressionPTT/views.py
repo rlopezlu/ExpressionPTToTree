@@ -16,7 +16,7 @@ class Part1Game (Page):
 
     def before_next_page(self):
         print('got to before')
-        self.player.intermediate_reward = self.player.task_reward + models.Constants.endowment
+        self.player.intermediate_reward = self.player.task_reward + self.group.treatment_endowment
 
 
 class SurveyStart (Page):
@@ -106,7 +106,7 @@ class PredictB(Page):
 
 class WillingnessB(Page):
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.player.id_in_group == 2 and self.group.treatment_treatment == 'DM'
 
     form_model = models.Group
     form_fields = ['b_willing']
@@ -133,7 +133,7 @@ class SendMessage(Page):
     form_fields = ['b_message']
 
     def is_displayed(self):
-        return self.player.id_in_group == 2 and self.group.b_charged
+        return self.player.id_in_group == 2 and self.group.b_charged and self.group.treatment_treatment == 'DM'
 
 
 class WaitForMessage(WaitPage):
@@ -143,10 +143,10 @@ class WaitForMessage(WaitPage):
 class DisplayMessage(Page):
     def is_displayed(self):
         self.player.total_pay = self.player.intermediate_reward + self.player.task_reward * self.group.a_takes
-        return self.player.id_in_group == 1
+        return self.player.id_in_group == 1 and self.group.treatment_treatment == 'DM'
 
     def before_next_page(self):
-        self.player.total_pay = models.Constants.endowment + self.player.task_reward + self.group.total_taken
+        self.player.total_pay = self.group.treatment_endowment + self.player.task_reward + self.group.total_taken
 
 
 class MessageReadWait(WaitPage):
@@ -156,7 +156,7 @@ class MessageReadWait(WaitPage):
 class MessageRead(Page):
 
     def is_displayed(self):
-        return self.player.id_in_group == 2
+        return self.player.id_in_group == 2 and self.group.treatment_treatment == 'DM'
 
     def before_next_page(self):
         self.group.final_pay()
@@ -172,7 +172,7 @@ class Results(Page):
     def vars_for_template(self):
         return {
             'partner': self.player.get_partner(),
-            'paycheck': models.Constants.endowment + self.player.task_reward + self.group.total_taken,
+            'paycheck': self.group.treatment_endowment + self.player.task_reward + self.group.total_taken,
         }
 
 

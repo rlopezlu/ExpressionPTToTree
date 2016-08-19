@@ -24,16 +24,23 @@ class Constants(BaseConstants):
     name_in_url = 'ExpressionPTT'
     players_per_group = 2
     num_rounds = 1
-    endowment = c(3)
+
 
 
 class Subsession(BaseSubsession):
 
     def before_session_starts(self):
+        i = 0
+        for group in self.get_groups():
+            group.treatment_endowment = self.session.config['endowment'][i]
+            group.treatment_treatment = self.session.config['treatment'][i]
+            i += 1
         self.get_groups()[0].b_message_price = random.randrange(0, 300)/100
 
 
 class Group(BaseGroup):
+    treatment_endowment = models.IntegerField()
+    treatment_treatment = models.TextField()
     a_takes = models.DecimalField(min=0, max=100, max_digits=5, decimal_places=2)
     total_taken = models.CurrencyField()
     b_predicts = models.PositiveIntegerField(min=0, max=100)
@@ -45,12 +52,12 @@ class Group(BaseGroup):
     def final_pay(self):
         p1 = self.get_player_by_id(1)
         p2 = self.get_player_by_id(2)
-        p1.final_reward = Constants.endowment + p1.task_reward + self.total_taken
+        p1.final_reward = self.treatment_endowment+ p1.task_reward + self.total_taken
 
         if self.b_charged:
-            p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken - self.b_message_price
+            p2.final_reward = self.treatment_endowment+ p2.task_reward - self.total_taken - self.b_message_price
         else:
-            p2.final_reward = Constants.endowment + p2.task_reward - self.total_taken
+            p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
 
 
 class Player(BasePlayer):

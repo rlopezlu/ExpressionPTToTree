@@ -7,9 +7,8 @@ angular.module('Game', []).controller("gameController",
 {
     // config files
     $scope.numberofpeople = null;
-    // $scope.scale = 1;
+    $scope.parsedIncome = 0;
     $scope.incomegoal = 10;
-    $scope.testThis = "something";
     $scope.treatment = 1;
     $scope.method = {
       type: '',
@@ -27,24 +26,13 @@ angular.module('Game', []).controller("gameController",
     // set in config
 
     $scope.income = 0;
-    $scope.percent = 0;
-    $scope.transferred = 0;
-    $scope.percentTransferred= 0;
-    $scope.moneytransferred = 0;
     $scope.totalincome = 0;
     $scope.task = 1;
-
-    // variables for P
-    $scope.bid = 0;
-    $scope.actualprice = 0;
 
     // time variables
     $scope.timelimit = 35;
     $scope.time = 35;
     $scope.practiceRound = 1;
-
-
-
 
 
     // finishes questions onto money part
@@ -63,7 +51,6 @@ angular.module('Game', []).controller("gameController",
       }
       else $scope.mytimeout = $timeout($scope.onTimeout,1000);
     };
-
 
     $scope.showgame = function() {
         console.log("task ", $scope.task);
@@ -140,52 +127,20 @@ angular.module('Game', []).controller("gameController",
         $("#income").text("So far, your income is $" +
           $scope.floatToMoney($scope.income).toFixed(2) + ".");
         // save income as integer
-        $('#task_reward').val($scope.floatToMoney($scope.income).toFixed(2));
+        $scope.parsedIncome = $scope.floatToMoney($scope.income).toFixed(2);
+        $('#task_reward').val($scope.parsedIncome);
         console.log('totalIncome ', $scope.income);
+        console.log('parsedIncome', $scope.parsedIncome);
         console.log('saved income to div ', $('#task_reward').val());
 
-        // save income
-        // rs.trigger("saveIncome", {
-        //   role: $scope.role,
-        //   endowment: $scope.endowment,
-        //   income: $scope.income,
-        //   percent: $scope.percent,
-        //   transferred: $scope.transferred,
-        //   percentTransferred: $scope.percentTransferred,
-        //   moneytransferred: $scope.moneytransferred,
-        //   totalincome: $scope.totalincome
-        // });
-        // rs.trigger("adminTasks", {
-        //   points: $scope.locatorState.getPointvalue(),
-        //   totalpoints: $scope.income,
-        //   task: $scope.task,
-        //   time: $scope.getTime()
-        // });
-
         // reaches income goal or passes max number of tasks
-        //if ($scope.income > $scope.incomegoal * 100 * $scope.scale || $scope.task > 22) {
         if ($scope.income > $scope.incomegoal * 100 /** $scope.scale*/ || $scope.task > 22) {
           $timeout.cancel($scope.mytimeout);
           console.log("sending payload, over.");
-          // rs.send("sendIncome", {
-          //   income: $scope.income
-          // });
-          // rs.trigger("saveIncome", {
-          //   role: $scope.role,
-          //   endowment: $scope.endowment,
-          //   income: $scope.income,
-          //   percent: $scope.percent,
-          //   transferred: $scope.transferred,
-          //   percentTransferred: $scope.percentTransferred,
-          //   moneytransferred: $scope.moneytransferred,
-          //   totalincome: $scope.totalincome
-          // });
           $scope.showpage.game = false;
             $("#hideNext").show();
           console.log("income : " + $scope.income);
-        }
-        // clear dot and set new goal
-        else {
+        } else {
           $scope.task++;
           $scope.points.pop();
           $scope.plot.setData([$scope.points]);
@@ -199,10 +154,6 @@ angular.module('Game', []).controller("gameController",
           $scope.mytimeout = $timeout($scope.onTimeout,1000);
         }
   };
-
-
-
-
 
     $scope.floatToMoney = function(number) {
       return parseFloat(parseInt(number)) / 100;

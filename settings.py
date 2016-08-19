@@ -139,7 +139,11 @@ SESSION_CONFIGS = [
         'name': 'ExpressionPTT',
         'display_name': "ExpressionPTT",
         'real_world_currency_per_point': 1,
-        'num_demo_participants': 2,
+        'num_demo_participants': 4,
+        'num_groups' : 2,
+        'treatment' : ['DM', 'NM'],
+        'endowment' : [3,5], 
+        'targetIncome' : [10, 10],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
     },
     {

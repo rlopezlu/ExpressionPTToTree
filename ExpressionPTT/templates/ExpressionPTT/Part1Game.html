@@ -23,9 +23,8 @@
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
     $("#hideNext").hide();
-
 });
-
+</script>
 
 {% endblock %}
 
@@ -71,11 +70,11 @@ jQuery(document).ready(function ($) {
               </div>
             </div>
             <div class="row">
+              <!--
               <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
-            </div>
-            <div class="row text-center">
-              <h3 class="text-center" id="currentTask">The current task can earn you a
-                maximum of <span ng-bind="maxpoints"></span> points.
+              -->
+              <h3 class="text-center" >So far, your income is $<span ng-bind="parsedIncome"></span>.
+              The current task can earn you a maximum of <span ng-bind="maxpoints"></span> points.
               </h3>
             </div>
             <br><br>
@@ -91,7 +90,8 @@ jQuery(document).ready(function ($) {
                 </div>
                 <!-- Game -->
                 <div class="row">
-                  <div id="placeholder" style="width:600px;height:600px"></div>
+                  <!-- changed width and height to be 500, used to be 600-->
+                  <div id="placeholder" style="width:500px;height:500px"></div>
                 </div>
               </div>
               <div class="col-md-6">

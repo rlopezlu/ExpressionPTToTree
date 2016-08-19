@@ -22,3 +22,7 @@ To install bower globally use `npm install -g bower`
 `otree startapp my_new_app` to create my_new_app  
 add app info to settings.py  
 `otree resetdb` needs to be run when a new app is created
+
+###To upgrade otree core
+`pip3 install --upgrade otree-core`
+`otree resetdb`

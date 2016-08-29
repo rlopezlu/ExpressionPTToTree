@@ -132,31 +132,33 @@ SESSION_CONFIG_DEFAULTS = {
     'mturk_hit_settings': mturk_hit_settings,
 }
 
-
 SESSION_CONFIGS = [
-
     {
-        'name': 'ExpressionPTT',
-        'display_name': "ExpressionPTT",
+        'name': 'ExpressionPTTv1',
+        'display_name': "ExpressionPTTv1",
+        'real_world_currency_per_point': 1,
+        'num_demo_participants': 8,
+        'treatment' : ['TP','TP','TP','TPE'],
+        'targetIncome' : [4, 8, 10, 5],
+        'endowment' : [3, 5, 3, 5], 
+        'group' : [[1,2], [3,4], [5,6], [7,8]], 
+        'role' : [['A','B'],['A','B'],['A','B'], ['R', 'R']],
+        'readerSelection' : [1,2,1,0], 
+        'method' : '',
+        'app_sequence': ['ExpressionPTT', 'payment_info'],
+        'debug' : True
+    },
+    {
+        'name': 'ExpressionPTTv2',
+        'display_name': "ExpressionPTTv2",
         'real_world_currency_per_point': 1,
         'num_demo_participants': 4,
-        'num_groups' : 2,
-        'treatment' : ['DM', 'NM'],
-        'endowment' : [3,5], 
+        'treatment' : ['DM', 'DM'],
+        'endowment' : [3,3], 
+        'group' : [[1,2], [3,4]], 
+        'role' : [['A', 'B'], ['A', 'B']],
         'targetIncome' : [10, 10],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
-    },
-    {
-        'name': 'my_public_goods',
-        'display_name': "My Public Goods (Simple Version from tuturial)",
-        'num_demo_participants': 3,
-        'app_sequence': ['my_public_goods', 'survey', 'payment_info'],
-    },
-    {
-    'name': 'my_trust',
-    'display_name': "My Trust Game (simple version from tutorial)",
-    'num_demo_participants': 2,
-    'app_sequence': ['my_trust'],
     }
 ]
 

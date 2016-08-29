@@ -2,11 +2,29 @@
 
 {% block title %} Part 1 {% endblock %}
 
+{% block scripts %}
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+   var target = $('#target').val();
+    console.log(target);
+
+});
+
+</script>
+
+
+{% endblock %}
+
+
 {% block content %}
 
 <p>
 Part 1
 </p>
+<p>{{group.treatment_endowment}}</p>
+<p>{{group.treatment_treatment}}</p>
+<p>{{player.p_role}}</p>
+<input id = 'target'  type = "number" value = {{group.target_income}} style = 'display: none;'>
 
 {% next_button %}
 

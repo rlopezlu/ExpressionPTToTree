@@ -24,5 +24,5 @@ add app info to settings.py
 `otree resetdb` needs to be run when a new app is created
 
 ###To upgrade otree core
-`pip3 install --upgrade otree-core`
+`pip3 install --upgrade otree-core`  
 `otree resetdb`

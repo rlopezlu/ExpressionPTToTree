@@ -1,15 +1,12 @@
 {% extends "global/Base.html" %} {% load staticfiles otree_tags %}
 
-{% block title %} angular tests/ Game{% endblock %}
+{% block title %} Search Task{% endblock %}
 
 
 {% block styles %}
 <link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <link rel = "stylesheet" href ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 {% endblock %}
-
-
-
 
 {% block scripts %}
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -19,17 +16,21 @@
 
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-<script type="text/javascript" src="{% static "vickrey_auction/ang/start.js" %}"></script>
+
 <script type="text/javascript">
 jQuery(document).ready(function ($) {
     $("#hideNext").hide();
 });
 </script>
+<script type="text/javascript" src="{% static "vickrey_auction/ang/start.js" %}"></script>
+<input id = 'type'  type = "text" value = 'game' style = 'display: none;'>
 
 {% endblock %}
 
 
 {% block content %}
+<input id = 'target'  type = "number" value = {{group.target_income}} style = 'display: none;'>
+
 <div ng-app="Game">
     <div ng-controller="gameController">
         <div class="form-group required">
@@ -57,7 +58,7 @@ jQuery(document).ready(function ($) {
           <div class="container" ng-show="showpage.game">
             <div class="row">
               <div class="col-md-2 col-md-offset-5">
-                <h2>Task <span ng-bind="task"></span></h2>
+                <h2>Search Task <span ng-bind="task"></span></h2>
               </div>
               <div class="col-md-3">
                 <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"

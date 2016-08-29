@@ -1,0 +1,34 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Part 1 Result{% endblock %}
+
+{% block content %}
+
+{% if player.id_in_group == 1 %}
+    <p>
+        Being A, you are given the authority to transfer money from B's account to your own account. The maximum amount
+        of money you can collect is what B has earned as income in Part 1 (${{partner.task_reward}}).
+    </p>
+    <p>
+    What percentage of B's income do you want to transfer to your account?
+    (Use the slider below to set this percentage)
+    </p>
+    {% formfield  group.A_takes with label="A takes" %}
+{% elif player.id_in_group == 2 %}
+    <p>
+        At this moment, your counterpart A is deciding what proportion of your income ({{player.task_reward}}) to transfer to his/her own account.
+    </p>
+    <p>
+    What percentage of your income do you think A will transfer into their Account?
+    (Use the slider below to set this percentage)
+    </p>
+    {% formfield  group.B_predicts with label="B predicts" %}
+
+{% else %}
+
+<p>You are neither A nor B</p>
+{% endif %}
+
+{% next_button %}
+
+{% endblock %}

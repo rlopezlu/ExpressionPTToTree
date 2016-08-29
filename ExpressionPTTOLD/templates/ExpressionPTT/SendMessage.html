@@ -1,0 +1,48 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Message Box{% endblock %}
+
+
+
+{% block scripts %}
+<script type="text/javascript" src="{% static "vickrey_auction/jquery-ui/jquery-ui.min.js" %}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function ($) {
+
+    var input = $('#id_b_message');
+    input.text("");
+
+    var hello = function(){
+        if(input.val() != ""){
+            $("#hideNext").show();
+        } else {
+            $("#hideNext").hide();
+        }
+
+    }
+
+    $("textarea").on({
+        mouseenter: hello,
+        mouseleave: hello,
+        click: hello,
+        blur: hello,
+        keyup: hello
+    });
+
+
+    $("#hideNext").hide();
+
+});
+</script>
+{% endblock %}
+
+
+{% block content %}
+
+{% formfield group.b_message with label="Write a message here" %}
+
+{% next_button %}
+<div id="hideNext" style="display: none;">
+
+</div>
+{% endblock %}

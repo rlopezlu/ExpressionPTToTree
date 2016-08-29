@@ -9,6 +9,7 @@ import otree.models
 from otree.db import models
 from otree import widgets
 from otree.common import Currency as c, currency_range, safe_json
+import json
 from otree.constants import BaseConstants
 from otree.models import BaseSubsession, BaseGroup, BasePlayer
 # </standard imports>
@@ -22,35 +23,64 @@ Your app description
 
 class Constants(BaseConstants):
     name_in_url = 'ExpressionPTT'
-    players_per_group = 2
+    players_per_group = None
     num_rounds = 1
-
 
 
 class Subsession(BaseSubsession):
 
+    reader_message = models.TextField()
+    debug_mode = models.BooleanField()
+
     def before_session_starts(self):
         group_matrix = []
+        empty_messages = []
+        readers = max(self.session.config['readerSelection'])
+        for reader in range(0, readers):
+            empty_messages.append([])
+            print(empty_messages)
+            print(reader)
+        self.reader_message = json.dumps(empty_messages)
+
+        for grouping in self.session.config["group"]:
+            print(grouping)
+            # assigns groups based on array values in cofig
+            group_matrix.append(grouping)
+
+        self.set_group_matrix(group_matrix)
+        self.debug_mode = self.session.config['debug']
+
         i = 0
-        for group in self.get_groups():
-            group.treatment_endowment = self.session.config['endowment'][i]
-            group.treatment_treatment = self.session.config['treatment'][i]
-            group_matrix.append( self.session.config['group'][i])
+        for groupx in self.get_groups():
+            groupx.treatment_endowment = self.session.config['endowment'][i]
+            groupx.treatment_treatment = self.session.config['treatment'][i]
+            groupx.target_income = self.session.config['targetIncome'][i]
+            groupx.reader_index = self.session.config['readerSelection'][i]
+            for player in groupx.get_players():
+                player.p_role = self.session.config['role'][i][player.id_in_group-1]
+
+            if groupx.treatment_treatment == 'FM':
+                groupx.b_message_price = 0
+            else:
+                groupx.b_message_price = random.randrange(0, 300) / 100
             i += 1
-        self.set_group_matrix(group_matrix);
-        self.get_groups()[0].b_message_price = random.randrange(0, 300)/100
+        # message price is different (random) for every group
+        print("finished set up before session starts")
 
 
 class Group(BaseGroup):
+    # variables that change for each group
     treatment_endowment = models.IntegerField()
     treatment_treatment = models.TextField()
     a_takes = models.DecimalField(min=0, max=100, max_digits=5, decimal_places=2)
     total_taken = models.CurrencyField()
     b_predicts = models.PositiveIntegerField(min=0, max=100)
-    b_willing = models.CurrencyField(min=0)
+    b_willing = models.DecimalField(min=0, max_digits=5, decimal_places=2)
     b_message = models.TextField()
     b_message_price = models.DecimalField(max_digits=5, decimal_places=2)
     b_charged = models.BooleanField()
+    target_income = models.DecimalField(max_digits=5, decimal_places=2)
+    reader_index = models.IntegerField()
 
     def final_pay(self):
         p1 = self.get_player_by_id(1)
@@ -62,12 +92,17 @@ class Group(BaseGroup):
         else:
             p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
 
+    def reader_pay(self):
+        for p in self.get_players():
+            p.final_reward = self.treatment_endowment + p.task_reward
 
 class Player(BasePlayer):
+    # variables that change for each player
     task_reward = models.DecimalField(max_digits = 5, decimal_places=2)
     intermediate_reward = models.DecimalField(max_digits=5, decimal_places=2)
     final_reward = models.DecimalField(max_digits=5, decimal_places=2)
     total_pay = models.DecimalField(max_digits=5, decimal_places=2)
+    p_role = models.TextField()
 
     survey_response0 = models.IntegerField()
     survey_response1 = models.IntegerField()
@@ -85,3 +120,4 @@ class Player(BasePlayer):
 
     def get_partner(self):
         return self.get_others_in_group()[0]
+

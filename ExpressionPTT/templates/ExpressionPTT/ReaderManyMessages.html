@@ -1,0 +1,13 @@
+{% extends "global/Base.html" %} {% load staticfiles otree_tags %}
+
+{% block title %} Reader Many messages{% endblock %}
+
+{% block content %}
+
+{% for message in messages  %}
+  <p>"{{ message}}"</p>
+{% endfor %}
+
+{% next_button %}
+
+{% endblock %}

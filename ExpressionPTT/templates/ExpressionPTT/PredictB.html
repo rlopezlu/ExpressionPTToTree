@@ -4,13 +4,12 @@
 
 {% block content %}
     <p>
-        At this moment, your counterpart A is deciding what proportion of your income ({{player.task_reward}}) to transfer to his/her own account.
+        At this moment, your counterpart A is deciding what proportion of your income (${{player.task_reward}}) to transfer to his/her own account.
     </p>
     <p>
     What percentage of your income do you think A will transfer into their Account?
-    (Use the slider below to set this percentage)
     </p>
-    {% formfield  group.b_predicts with label="B predicts" %}
+    {% formfield  group.b_predicts with label="B predicts (%)" %}
 
 
 {% next_button %}

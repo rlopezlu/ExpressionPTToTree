@@ -85,6 +85,7 @@ jQuery(document).ready(function ($) {
 {% block content %}
 <p>{{group.treatment_endowment}}</p>
 <p>{{group.treatment_treatment}}</p>
+<p>{{player.p_role}}</p>
     <div class="form-group required">
 
         <div class="controls">
@@ -145,4 +146,5 @@ jQuery(document).ready(function ($) {
     <div id="hideNext"  style="margin-left: 300px; display: none;">
         {% next_button %}
     </div>
+{% next_button %}
 {% endblock %}

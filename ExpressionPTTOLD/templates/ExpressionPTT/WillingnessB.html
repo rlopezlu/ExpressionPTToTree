@@ -1,0 +1,28 @@
+{% extends "global/Base.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Willingness
+{% endblock %}
+
+{% block content %}
+
+<p>
+
+    Your counterpart, A, has transferred {{group.a_takes}}% of your income ({{taken_amount}}) to their own account.
+Your available earnings are now {{available_earnings}}
+</p>
+<p>
+    What is the maximum amount you would be willing to pay to write and send a message that your counterpart A will read?
+</p>
+
+<p>
+    (Express the amount in dollars and cents)
+</p>
+
+    {% formfield group.b_willing with label="How much will you pay?" %}
+<p>The actual price of sending a message will be shown on the next screen.</p>
+    {% next_button %}
+{% endblock %}
+
+

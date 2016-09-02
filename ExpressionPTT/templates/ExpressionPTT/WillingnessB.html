@@ -12,6 +12,8 @@
     Your counterpart, A, has transferred {{a_takes_edited}}% of your income (${{taken_amount}}) to their own account.
 Your available earnings are now ${{available_earnings}}
 </p>
+{% if group.price_method == "WTP" %}
+
 <p>
     What is the maximum amount you would be willing to pay to write and send a message that your counterpart A will read?
 </p>
@@ -21,6 +23,21 @@ Your available earnings are now ${{available_earnings}}
 </p>
 
     {% formfield group.b_willing with label="How much will you pay?" %}
+
+{% elif group.price_method == "WTA" %}
+<p>
+    You are eligible to send a message to your counterpart. How much money would you want to receive in exchange for giving up your right to send a message?
+</p>
+
+<p>
+    (Express the amount in dollars and cents)
+</p>
+
+    {% formfield group.b_willing with label="How much do you expect?" %}
+
+
+{% endif %}
+
 <p>The actual price of sending a message will be shown on the next screen.</p>
     {% next_button %}
 {% endblock %}

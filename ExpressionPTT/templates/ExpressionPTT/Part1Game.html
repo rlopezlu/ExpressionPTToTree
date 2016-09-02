@@ -1,11 +1,13 @@
 {% extends "global/Base.html" %} {% load staticfiles otree_tags %}
 
-{% block title %} Search Task{% endblock %}
-
 
 {% block styles %}
 <link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <link rel = "stylesheet" href ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
 {% endblock %}
 
 {% block scripts %}
@@ -31,8 +33,8 @@ jQuery(document).ready(function ($) {
 {% block content %}
 <input id = 'target'  type = "number" value = {{group.target_income}} style = 'display: none;'>
 
-<div ng-app="Game">
-    <div ng-controller="gameController">
+<div ng-app="Game" >
+    <div ng-controller="gameController" ng-cloak>
         <div class="form-group required">
             <div class="controls">
                 <input type="hidden" name="task_reward" id="task_reward" value="0">
@@ -55,10 +57,10 @@ jQuery(document).ready(function ($) {
           </div>
 
           <!-- income earning -->
-          <div class="container" ng-show="showpage.game">
-            <div class="row">
-              <div class="col-md-2 col-md-offset-5">
-                <h2>Search Task <span ng-bind="task"></span></h2>
+          <div class="container" ng-show="showpage.game" ng-cloak>
+            <div class="row" ng-show="showpage.setup">
+              <div class="col-md-3 col-md-offset-0" ng-show="showpage.setup">
+                <h3>Search Task <span ng-bind="task"></span></h3>
               </div>
               <div class="col-md-3">
                 <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
@@ -74,7 +76,7 @@ jQuery(document).ready(function ($) {
               <!--
               <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
               -->
-              <h3 class="text-center" >So far, your income is $<span ng-bind="parsedIncome"></span>.
+              <h3 ng-show="showpage.setup" class="text-center" >So far, your income is $<span ng-bind="parsedIncome"></span>.
               The current task can earn you a maximum of <span ng-bind="maxpoints"></span> points.
               </h3>
             </div>
@@ -83,7 +85,7 @@ jQuery(document).ready(function ($) {
               <div class="col-md-6">
                 <div class="row">
                   <div class="col-md-5 col-md-offset-1 text-right">
-                    <h4 id="nearness" class="text-center">Click!</h4>
+                    <h4 id="nearness" class="text-center"></h4>
                   </div>
                   <div class="col-md-4">
                     <h4 id="location" class="text-center"></h4>
@@ -92,32 +94,32 @@ jQuery(document).ready(function ($) {
                 <!-- Game -->
                 <div class="row">
                   <!-- changed width and height to be 500, used to be 600-->
-                  <div id="placeholder" style="width:500px;height:500px"></div>
+                  <div id="placeholder" style="width:400px;height:400px"></div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-6" ng-show="showpage.setup">
                 <!-- points earned -->
                 <br><br>
-                <div class="row">
+                <div class="row" ng-show="showpage.setup">
                   <div class="col-md-4 col-md-offset-3">
-                    <h3 id="timer">Time Left</h3>
+                    <h4 id="timer">Time Left</h4>
                   </div>
                   <div class="col-md-2">
-                    <h3 ng-bind="time"></h3>
+                    <h4 ng-bind="time"></h4>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-4 col-md-offset-3">
-                    <h3>Points</h3>
+                    <h4>Points</h4>
                   </div>
                   <div class="col-md-2">
-                    <h3 id="points"></h3>
+                    <h4 id="points"></h4>
                   </div>
                 </div>
                 <!-- locator -->
                 <div class="row">
                   <div class="col-md-11 col-md-offset-4">
-                    <canvas id="locator" width="150px" height="450px"></canvas>
+                    <canvas id="locator" width="150px" height="250px"></canvas>
                   </div>
                 </div>
                 <div class="row">

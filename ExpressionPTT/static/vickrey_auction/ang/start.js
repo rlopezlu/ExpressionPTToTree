@@ -17,7 +17,8 @@ angular.module('Game', []).controller("gameController",
     };
 
     $scope.showpage = {beforeGame: true,
-        game: false
+        game: true,
+        setup: false
     };
 
 
@@ -68,6 +69,7 @@ angular.module('Game', []).controller("gameController",
 
         $scope.showpage.beforeGame = false;
         $scope.showpage.game = true;
+        $scope.showpage.setup = true;
 
       //start tooltip
       $('[data-toggle="instructions"]').popover({
@@ -93,7 +95,8 @@ angular.module('Game', []).controller("gameController",
           yaxis: {
               ticks:10,
               min:0,
-              max:100
+              max:100,
+              position: 'left'
           },
           grid: {
             clickable: true
@@ -106,10 +109,16 @@ angular.module('Game', []).controller("gameController",
       $scope.locatorState.setGoal();
       $scope.locatorState.reset();
 
-      $("#placeholder").bind("plotclick", function(event, pos, item) {
-        $scope.points.pop();
+        $("#placeholder").bind("plotclick", function(event, pos, item) {
+            if(pos.x < 0) pos.x = 0.5;
+            if (pos.y < 0) pos.y = 0.5;
+            if(pos.y > 100) pos.y = 100;
+            if (pos.x > 100) pos.x = 100;
+          console.log('x ' + pos.x + ' y : ' + pos.y);
+          $scope.points.pop();
         $scope.points.push([pos.x, pos.y]);
         console.log($scope.maxpoints);
+
         $scope.plot.setData([{
           data: $scope.points,
           clickable: false,

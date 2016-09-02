@@ -56,13 +56,18 @@ class Subsession(BaseSubsession):
             groupx.treatment_treatment = self.session.config['treatment'][i]
             groupx.target_income = self.session.config['targetIncome'][i]
             groupx.reader_index = self.session.config['readerSelection'][i]
+            groupx.price_method = self.session.config['method'][i]
             for player in groupx.get_players():
                 player.p_role = self.session.config['role'][i][player.id_in_group-1]
 
             if groupx.treatment_treatment == 'FM':
                 groupx.b_message_price = 0
             else:
-                groupx.b_message_price = random.randrange(0, 300) / 100
+                if self.session.config['price'][i] == -1:
+                    groupx.b_message_price = random.randrange(0, 300) / 100
+                    groupx.price_display = self.session.config['priceDisplay'][i]
+                else:
+                    groupx.b_message_price = self.session.config['price'][i]
             i += 1
         # message price is different (random) for every group
         print("finished set up before session starts")
@@ -78,7 +83,9 @@ class Group(BaseGroup):
     b_willing = models.DecimalField(min=0, max_digits=5, decimal_places=2)
     b_message = models.TextField()
     b_message_price = models.DecimalField(max_digits=5, decimal_places=2)
-    b_charged = models.BooleanField()
+    price_method = models.TextField()
+    price_display = models.TextField()
+    b_eligible = models.BooleanField()
     target_income = models.DecimalField(max_digits=5, decimal_places=2)
     reader_index = models.IntegerField()
 
@@ -87,14 +94,21 @@ class Group(BaseGroup):
         p2 = self.get_player_by_id(2)
         p1.final_reward = self.treatment_endowment+ p1.task_reward + self.total_taken
 
-        if self.b_charged:
-            p2.final_reward = self.treatment_endowment+ p2.task_reward - self.total_taken - self.b_message_price
-        else:
-            p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
+        if self.price_method != 'WTA':
+            if self.b_eligible:
+                p2.final_reward = self.treatment_endowment+ p2.task_reward - self.total_taken - self.b_message_price
+            else:
+                p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
+        else:  # WTA
+            if self.b_eligible:
+                p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken + self.b_message_price
+            else:
+                p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
 
     def reader_pay(self):
         for p in self.get_players():
             p.final_reward = self.treatment_endowment + p.task_reward
+
 
 class Player(BasePlayer):
     # variables that change for each player

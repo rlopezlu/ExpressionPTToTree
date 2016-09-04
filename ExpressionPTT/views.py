@@ -151,12 +151,12 @@ class WillingnessB(Page):
         else:
             self.group.b_eligible = False
 
-        if self.group.b_message_price >= self.group.b_willing and self.group.price_method == 'WTA':
-            self.group.b_eligible = True
-        else:
+        if self.group.b_message_price <= self.group.b_willing and self.group.price_method == 'WTA':  # will lose right to send message
             self.group.b_eligible = False
+        else:
+            self.group.b_eligible = True
 
-        if self.subsession.debug_mode:
+        if self.subsession.debug_mode and self.group.price_method != 'WTA':
             self.group.b_eligible = True
 
 
@@ -166,7 +166,7 @@ class SendMessage(Page):
 
     def is_displayed(self):
         return (self.group.b_eligible and (
-            self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP') or self.group.treatment_treatment == 'FM' or self.group.price_method == 'WTA') and self.player.p_role == 'B'
+            self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP') or self.group.treatment_treatment == 'FM') and self.player.p_role == 'B'
 
     # add message to list of reader messages
     def before_next_page(self):

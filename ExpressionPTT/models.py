@@ -101,9 +101,9 @@ class Group(BaseGroup):
                 p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
         else:  # WTA
             if self.b_eligible:
-                p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken + self.b_message_price
-            else:
                 p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken
+            else:  # gave up right to send message
+                p2.final_reward = self.treatment_endowment + p2.task_reward - self.total_taken + self.b_message_price
 
     def reader_pay(self):
         for p in self.get_players():

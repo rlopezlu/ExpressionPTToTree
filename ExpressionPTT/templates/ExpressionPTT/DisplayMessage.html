@@ -3,9 +3,13 @@
 {% block title %} Display Message{% endblock %}
 
 {% block content %}
+
+{% if group.b_message == null or group.b_message == Null %}
+<p>Unfortunately, your counterpart was unable to send a message.</p>
+{% else %}
     <p>The following is a message from your counterpart</p>
     <p>"{{group.b_message}}"</p>
-
+{% endif %}
     {% next_button %}
 
 {% endblock %}

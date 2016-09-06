@@ -38,8 +38,8 @@ class Subsession(BaseSubsession):
         readers = max(self.session.config['readerSelection'])
         for reader in range(0, readers):
             empty_messages.append([])
-            print(empty_messages)
-            print(reader)
+            #  print(empty_messages)
+            #  print(reader)
         self.reader_message = json.dumps(empty_messages)
 
         for grouping in self.session.config["group"]:

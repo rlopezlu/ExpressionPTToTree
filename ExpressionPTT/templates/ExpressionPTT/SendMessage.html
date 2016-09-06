@@ -39,6 +39,10 @@ jQuery(document).ready(function ($) {
 
 {% block content %}
 
+{% if group.price_method == "WTA" %}
+<p>You requested too much money. You can still send a message.</p>
+{% endif %}
+
 {% formfield group.b_message with label="Write a message here" %}
 
 {% next_button %}

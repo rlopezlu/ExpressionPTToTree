@@ -135,6 +135,8 @@ class WillingnessB(Page):
     form_fields = ['b_willing']
 
     def b_willing_max(self):
+        if self.group.price_method == "WTA":
+            return 100
         return self.player.task_reward - self.player.task_reward * self.group.a_takes
 
     def vars_for_template(self):
@@ -150,11 +152,11 @@ class WillingnessB(Page):
             self.group.b_eligible = True
         else:
             self.group.b_eligible = False
-
+        #  if they give you more than you ask for, you lose your message and get the money
         if self.group.b_message_price <= self.group.b_willing and self.group.price_method == 'WTA':  # will lose right to send message
-            self.group.b_eligible = False
-        else:
             self.group.b_eligible = True
+        else:
+            self.group.b_eligible = False
 
         if self.subsession.debug_mode and self.group.price_method != 'WTA':
             self.group.b_eligible = True

@@ -61,10 +61,12 @@ class Subsession(BaseSubsession):
                 player.p_role = self.session.config['role'][i][player.id_in_group-1]
 
             if groupx.treatment_treatment == 'FM':
+                groupx.b_eligible = True
                 groupx.b_message_price = 0
             else:
-                if self.session.config['price'][i] == -1:
+                if self.session.config['price'][i] == -1: #  -1 is encoding for random price
                     groupx.b_message_price = random.randrange(0, 300) / 100
+                    # list vs cont only applies with WTP or WTA, not SOP
                     groupx.price_display = self.session.config['priceDisplay'][i]
                 else:
                     groupx.b_message_price = self.session.config['price'][i]

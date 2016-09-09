@@ -129,10 +129,56 @@ class PredictB(Page):
 
 class WillingnessB(Page):
     def is_displayed(self):
-        return self.player.p_role == 'B' and (self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP')
+        return self.group.price_display == 'CONT' and self.player.p_role == 'B' and (self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP')
 
     form_model = models.Group
     form_fields = ['b_willing']
+
+    def b_willing_max(self):
+        if self.group.price_method == "WTA":
+            return 100
+        return self.player.task_reward - self.player.task_reward * self.group.a_takes
+
+    def vars_for_template(self):
+        return {
+            'a_takes_edited': self.group.a_takes * 100,
+            'partner': self.player.get_partner(),
+            'taken_amount': round(self.player.task_reward * self.group.a_takes, 2),
+            'available_earnings': round(self.player.task_reward - self.player.task_reward * self.group.a_takes, 2)
+        }
+
+    def before_next_page(self):
+        if self.group.b_message_price <= self.group.b_willing and self.group.price_method == 'WTP':
+            self.group.b_eligible = True
+        else:
+            self.group.b_eligible = False
+        #  if they give you more than you ask for, you lose your message and get the money
+        if self.group.b_message_price <= self.group.b_willing and self.group.price_method == 'WTA':  # will lose right to send message
+            self.group.b_eligible = True
+        else:
+            self.group.b_eligible = False
+
+        if self.subsession.debug_mode and self.group.price_method != 'WTA':
+            self.group.b_eligible = True
+
+
+class WillingnessBList(Page):
+    def is_displayed(self):
+        return self.group.price_display == 'LIST' and self.player.p_role == 'B' and (self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP')
+
+    form_model = models.Group
+    form_fields = ['b_willing']
+
+    def b_willing_choices(self):
+        available = round(self.player.task_reward - self.player.task_reward * self.group.a_takes, 2)
+        if self.group.price_method == 'WTA':
+            return [x * 0.5 for x in range(0, 10 + 1)]
+        if self.group.price_method == 'WTP':
+            print(available)
+            print(available * 100)
+            # return [x * 0.5 for x in range(0, 10 + 1)]
+            return [x / 100 for x in range(0, int(available * 100) + 1, 20)]
+        # return range(0, self.player.task_reward, 1)
 
     def b_willing_max(self):
         if self.group.price_method == "WTA":
@@ -231,8 +277,13 @@ class MessageReadWait(WaitPage):
 class MessageRead(Page):
 
     def is_displayed(self):
-        return self.player.p_role == 'B' and (
-            self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'FM' or self.group.treatment_treatment == 'TP')
+        # old
+        # return self.player.p_role == 'B' and (
+        #     self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'FM' or self.group.treatment_treatment == 'TP')
+        # new
+        return self.player.p_role == 'B' and (self.group.b_eligible and (
+            self.group.treatment_treatment == 'DM' or self.group.treatment_treatment == 'TP') or self.group.treatment_treatment == 'FM')
+
 
     def before_next_page(self):
         self.group.final_pay()
@@ -293,6 +344,7 @@ page_sequence = [
     TakeWaitPage,
     PredictB,
     WillingnessB,
+    WillingnessBList,
     SendMessage,
     WaitForMessage,
     WaitForManyMessage,

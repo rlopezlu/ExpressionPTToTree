@@ -146,7 +146,7 @@ SESSION_CONFIGS = [
         'role': [['A', 'B'], ['A', 'B'], ['A', 'B'], ['R', 'R']],
         'readerSelection': [1, 2, 1, 0],
         'method': ['WTP', 'WTA', 'WTP', 'WTA'],
-        'priceDisplay': ['CONT', 'LIST', 'LIST', 'LIST'],
+        'priceDisplay': ['LIST', 'LIST', 'LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
         'debug': True
     },
@@ -163,7 +163,7 @@ SESSION_CONFIGS = [
         'role': [['A', 'B'], ['A', 'B']],
         'readerSelection': [1, 2],
         'method': ['WTP', 'WTA'],
-        'priceDisplay': ['CONT', 'LIST'],
+        'priceDisplay': ['LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
         'debug': True
     }

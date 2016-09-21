@@ -165,7 +165,7 @@ SESSION_CONFIGS = [
         'method': ['WTP', 'WTA'],
         'priceDisplay': ['LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
-        'debug': True
+        'debug': False
     }
 ]
 

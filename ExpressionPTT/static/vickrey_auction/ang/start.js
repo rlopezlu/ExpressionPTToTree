@@ -6,25 +6,15 @@ angular.module('Game', []).controller("gameController",
     ["$rootScope", "$scope", "$sce", "$timeout", function($rootScope, $scope, $sce, $timeout)
 {
     // config files
-    $scope.numberofpeople = null;
     $scope.parsedIncome = 0;
     $scope.incomegoal = 10;
     $scope.treatment = 1;
-    $scope.method = {
-      type: '',
-      inc: '',
-      direction: ''
-    };
 
-    $scope.showpage = {beforeGame: true,
+    $scope.showpage = {
+        beforeGame: true,
         game: true,
         setup: false
     };
-
-
-
-    // user variables
-    // set in config
 
     $scope.income = 0;
     $scope.totalincome = 0;
@@ -35,6 +25,7 @@ angular.module('Game', []).controller("gameController",
     $scope.timelimit = 35;
     $scope.time = 35;
     $scope.practiceRound = 1;
+    $scope.validClick = false;
 
 
     // finishes questions onto money part
@@ -117,6 +108,10 @@ angular.module('Game', []).controller("gameController",
           console.log('x ' + pos.x + ' y : ' + pos.y);
           $scope.points.pop();
         $scope.points.push([pos.x, pos.y]);
+            if(pos.x != 0 || pos.y != 0){
+                $scope.validClick = true;
+            }
+
         console.log($scope.maxpoints);
 
         $scope.plot.setData([{
@@ -141,6 +136,17 @@ angular.module('Game', []).controller("gameController",
     };
 
     $scope.nexttask = function() {
+        if ($scope.income > $scope.incomegoal * 100  || $scope.task >= $scope.taskGoal) {
+          $timeout.cancel($scope.mytimeout);
+          console.log("done with game.");
+          $scope.showpage.game = false;
+            $("#hideNext").show();
+          console.log("income : " + $scope.income);
+            return;
+        }
+
+        if(!$scope.validClick) return;
+
         $scope.task++;
         console.log("task ", $scope.task);
         $scope.income += $scope.locatorState.getPointvalue();
@@ -154,14 +160,8 @@ angular.module('Game', []).controller("gameController",
         console.log('parsedIncome', $scope.parsedIncome);
         console.log('saved income to div ', $('#task_reward').val());
 
-        // reaches income goal or passes max number of tasks
-        if ($scope.income > $scope.incomegoal * 100 /** $scope.scale*/ || $scope.task > $scope.taskGoal) {
-          $timeout.cancel($scope.mytimeout);
-          console.log("sending payload, over.");
-          $scope.showpage.game = false;
-            $("#hideNext").show();
-          console.log("income : " + $scope.income);
-        } else {
+        // reaches income goal or passes max number of tasks, done with game
+         //else {
           //$scope.task++;
           $scope.points.pop();
           $scope.plot.setData([$scope.points]);
@@ -173,7 +173,7 @@ angular.module('Game', []).controller("gameController",
           $timeout.cancel($scope.mytimeout);
           $scope.time = $scope.timelimit;
           $scope.mytimeout = $timeout($scope.onTimeout,1000);
-        }
+        //}
   };
 
     $scope.floatToMoney = function(number) {
@@ -212,6 +212,7 @@ angular.module('Game', []).controller("gameController",
     };
 
     Point.prototype.reset = function(ctx) {
+        $scope.validClick = false;
       this.value = 0;
       this.draw(ctx);
     };

@@ -27,8 +27,8 @@ class PracticeGame (Page):
 
 class SurveyStart (Page):
 
-    def is_displayed(self):
-        return not self.subsession.debug_mode
+    # def is_displayed(self):
+    #     return not self.subsession.debug_mode
 
     form_model = models.Player
     form_fields = ['survey_response0',

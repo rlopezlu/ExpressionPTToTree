@@ -148,6 +148,7 @@ SESSION_CONFIGS = [
         'method': ['WTP', 'WTA', 'WTP', 'WTA'],
         'priceDisplay': ['LIST', 'LIST', 'LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
+        'video': "youtube.com/watch?v=YgdR5FvnNPc",
         'debug': True
     },
     {
@@ -165,7 +166,25 @@ SESSION_CONFIGS = [
         'method': ['WTP', 'WTA'],
         'priceDisplay': ['LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
-        'debug': False
+        'debug': True
+    },
+    {
+        'name': 'Testing_Debugging',
+        'display_name': "Debug_and_testing",
+        'real_world_currency_per_point': 1,
+        'num_demo_participants': 4,
+        'treatment': ['DM', 'NM'],
+        'targetIncome': [4, 8],
+        'price': [-1, -1],
+        'video': "youtube.com/watch?v=YgdR5FvnNPc",
+        'endowment': [3, 5],
+        'group': [[1, 2], [3, 4]],
+        'role': [['A', 'B'], ['A', 'B']],
+        'readerSelection': [1, 2],
+        'method': ['WTP', 'WTA'],
+        'priceDisplay': ['LIST', 'LIST'],
+        'app_sequence': ['ExpressionPTT', 'payment_info'],
+        'debug': True
     }
 ]
 

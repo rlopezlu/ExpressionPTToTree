@@ -11,16 +11,17 @@
     .bid-slider {
         margin: .5em auto;
     }
-
     .bid {
         text-align: center;
+    }
+    .row{
+        margin-bottom: 20px;
     }
     .textlabel{
         border:0;
         color:#f6931f;
         font-weight:bold;
     }
-
     .payoff {
         margin: 1.5em 0;
     }
@@ -52,7 +53,25 @@ jQuery(document).ready(function ($) {
               $('#'+ tempName + "text").val(ui.value);
               updateValues(tempName);
               checkValid(tempName);
-          }
+          },
+            change : function (event, ui) {
+                var tempName = this.id;
+              $('#id_'+ tempName + 'text').val(ui.value);
+              ui.handle.style.display = "inline";
+              console.log(tempName);
+              $('#'+ tempName + "text").val(ui.value);
+              updateValues(tempName);
+              checkValid(tempName);
+            },
+            start: function (event, ui) {
+                var tempName = this.id;
+              $('#id_'+ tempName + 'text').val(ui.value);
+              ui.handle.style.display = "inline";
+              console.log(tempName);
+              $('#'+ tempName + "text").val(ui.value);
+              updateValues(tempName);
+              checkValid(tempName);
+            }
         });
     };
 

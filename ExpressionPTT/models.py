@@ -31,11 +31,12 @@ class Subsession(BaseSubsession):
 
     reader_message = models.TextField()
     debug_mode = models.BooleanField()
-
+    vid_url = models.TextField()
     def before_session_starts(self):
         group_matrix = []
         empty_messages = []
         readers = max(self.session.config['readerSelection'])
+
         for reader in range(0, readers):
             empty_messages.append([])
             #  print(empty_messages)
@@ -49,6 +50,8 @@ class Subsession(BaseSubsession):
 
         self.set_group_matrix(group_matrix)
         self.debug_mode = self.session.config['debug']
+        unparsed_video = self.session.config['video']
+        vid_url = unparsed_video.split('v=')[1]
 
         i = 0
         for groupx in self.get_groups():
@@ -82,7 +85,7 @@ class Group(BaseGroup):
     a_takes = models.DecimalField(min=0, max=100, max_digits=5, decimal_places=2)
     total_taken = models.CurrencyField()
     b_predicts = models.PositiveIntegerField(min=0, max=100)
-    b_willing = models.DecimalField(min=0, max_digits=5, decimal_places=2)
+    b_willing = models.DecimalField(min=0, max_digits=6, decimal_places=3)
     b_message = models.TextField()
     b_message_price = models.DecimalField(max_digits=5, decimal_places=2)
     price_method = models.TextField()
@@ -114,7 +117,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # variables that change for each player
-    task_reward = models.DecimalField(max_digits = 5, decimal_places=2)
+    task_reward = models.DecimalField(max_digits=5, decimal_places=2)
     intermediate_reward = models.DecimalField(max_digits=5, decimal_places=2)
     final_reward = models.DecimalField(max_digits=5, decimal_places=2)
     total_pay = models.DecimalField(max_digits=5, decimal_places=2)

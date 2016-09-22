@@ -7,6 +7,7 @@ from . import models
 from ._builtin import Page, WaitPage
 from .models import Constants
 import json
+import random
 from decimal import Decimal
 
 
@@ -16,6 +17,8 @@ class Part1Game (Page):
 
     def before_next_page(self):
         print('got to before')
+        if self.subsession.debug_mode:
+            self.player.task_reward = random.uniform(1, 5)
         self.player.intermediate_reward = self.player.task_reward + self.group.treatment_endowment
 
 
@@ -27,8 +30,8 @@ class PracticeGame (Page):
 
 class SurveyStart (Page):
 
-    # def is_displayed(self):
-    #     return not self.subsession.debug_mode
+    def is_displayed(self):
+        return not self.subsession.debug_mode
 
     form_model = models.Player
     form_fields = ['survey_response0',
@@ -170,14 +173,15 @@ class WillingnessBList(Page):
     form_fields = ['b_willing']
 
     def b_willing_choices(self):
-        available = round(self.player.task_reward - self.player.task_reward * self.group.a_takes, 2)
+        available = round(self.player.task_reward - (self.player.task_reward * self.group.a_takes), 2)
         if self.group.price_method == 'WTA':
             return [x * 0.5 for x in range(0, 10 + 1)]
         if self.group.price_method == 'WTP':
             print(available)
-            print(available * 100)
+            new_available = int(available * 100)
+            print(new_available)
             # return [x * 0.5 for x in range(0, 10 + 1)]
-            return [x / 100 for x in range(0, int(available * 100) + 1, 20)]
+            return [x / 100 for x in range(0, new_available + 1)]
         # return range(0, self.player.task_reward, 1)
 
     def b_willing_max(self):
@@ -329,7 +333,6 @@ class ThankYou (Page):
 
 
 page_sequence = [
-    # Angular,
     SurveyStart,
     SurveyWaitPage,
     Part1,

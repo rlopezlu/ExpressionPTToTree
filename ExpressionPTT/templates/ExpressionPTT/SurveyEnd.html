@@ -8,6 +8,9 @@
 {% block styles %}
 <link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <style type="text/css">
+    .table_wrap{
+        margin-left: -200px;
+    }
     .bid-slider {
         margin: .5em auto;
     }
@@ -104,10 +107,7 @@ jQuery(document).ready(function ($) {
 {% block content %}
 
 
-    <div class="form-group required">
-
-        <div class="controls">
-
+    <div class = "table_wrap">
             <div class="row">
                 <div class="col-md-2">(<span class="slide1" ></span>) Good-mood </div>
                 <div class="col-md-8" id="slide1"></div>
@@ -155,13 +155,9 @@ jQuery(document).ready(function ($) {
                 <br>
                 <input type="hidden" name="survey_responseF"  id="id_slide6text" value="0">
             </div>
-            </div>
     </div>
 
-
-        </div>
-    </div>
-    <div id="hideNext"  style="margin-left: 300px; display: none;">
+    <div id="hideNext"  style=" display: none;">
         {% next_button %}
     </div>
 {% endblock %}

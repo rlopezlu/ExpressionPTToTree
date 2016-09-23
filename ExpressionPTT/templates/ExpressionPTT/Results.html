@@ -5,9 +5,16 @@
     Results/ Earnings
 {% endblock %}
 
+{% block styles %}
+<style type="text/css">
+    .table_wrap{
+        margin-left: -200px;
+    }
+</style>
+{% endblock %}
+
+
 {% block content %}
-
-
 {% if player.id_in_group == 1 %}
       <div class="container">
     <h2 class="text-center">

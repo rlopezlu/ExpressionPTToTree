@@ -13,12 +13,12 @@ angular.module('Game', []).controller("gameController",
     $scope.showpage = {
         beforeGame: true,
         game: true,
-        setup: false
+        setup: true
     };
 
     $scope.income = 0;
     $scope.totalincome = 0;
-    $scope.taskGoal = 22;
+    $scope.taskGoal = 5;
     $scope.task = 1;
 
     // time variables
@@ -58,16 +58,17 @@ angular.module('Game', []).controller("gameController",
             $scope.taskGoal = 2;
         }
 
-        $scope.showpage.beforeGame = false;
+        $scope.showpage.beforeGame = true;
         $scope.showpage.game = true;
         $scope.showpage.setup = true;
 
       //start tooltip
+        /*
       $('[data-toggle="instructions"]').popover({
         html: true,
         trigger: 'focus hover'
       });
-
+*/
       $scope.points = [];
       $scope.plot = $.plot("#placeholder",[{
           data: $scope.points,

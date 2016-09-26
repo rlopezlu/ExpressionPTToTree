@@ -5,6 +5,23 @@
     Willingness List
 {% endblock %}
 
+{% block scripts%}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var PHONES = new Array("Sony","Samsung","HTC","Motorolla");
+	var available = 5.5;
+	$("#dropdown").find('option').remove();
+	//for(i=0; i < PHONES.length; i++){
+	for(i=0; i < 5.5; i+=.20){
+		var rounded = Math.round(i * 100) / 100
+		$("#dropdown").append('<option value="'+rounded+'">'+rounded+'</option>');
+	}
+});
+</script>
+{% endblock %}
+
 {% block content %}
 
 <p>
@@ -12,7 +29,9 @@
     Your counterpart, A, has transferred {{a_takes_edited}}% of your income (${{taken_amount}}) to their own account.
 Your available earnings are now ${{available_earnings}}
 </p>
-{% if group.price_method == "WTP" %}
+
+
+
 
 <p>
     What is the maximum amount you would be willing to pay to write and send a message that your counterpart A will read?
@@ -22,21 +41,9 @@ Your available earnings are now ${{available_earnings}}
     (Express the amount in dollars and cents)
 </p>
 
+<select id="dropdown"></select>
     {% formfield group.b_willing with label="How much will you pay?" %}
 
-{% elif group.price_method == "WTA" %}
-<p>
-    You are eligible to send a message to your counterpart. How much money would you want to receive in exchange for giving up your right to send a message?
-</p>
-
-<p>
-    (Express the amount in dollars and cents)
-</p>
-
-    {% formfield group.b_willing with label="How much do you expect?" %}
-
-
-{% endif %}
 
 <p>The actual price of sending a message will be shown on the next screen.</p>
     {% next_button %}

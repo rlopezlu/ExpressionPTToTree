@@ -5,16 +5,23 @@
     Results/ Earnings
 {% endblock %}
 
+{% block styles %}
+<style type="text/css">
+    .table_wrap{
+margin-right:200px;
+    }
+</style>
+{% endblock %}
+
+
 {% block content %}
-
-
 {% if player.id_in_group == 1 %}
-      <div class="container">
+      <div class="container table_wrap">
     <h2 class="text-center">
       Earnings (in $)</h3>
     </h2>
     <br>
-    <div class="row">
+    <div class="row table_wrap">
       <table class="table table-striped table-bordered table-nonfluid" align="center">
         <tr>
           <td class="col-md-1"></td>
@@ -55,7 +62,7 @@
       Earnings (in $)</h3>
     </h2>
     <br>
-    <div class="row">
+    <div class="row table_wrap">
       <table class="table table-striped table-bordered table-nonfluid" align="center">
         <tr>
           <td class="col-md-1"></td>

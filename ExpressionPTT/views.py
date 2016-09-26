@@ -173,16 +173,19 @@ class WillingnessBList(Page):
     form_fields = ['b_willing']
 
     def b_willing_choices(self):
-        available = round(self.player.task_reward - (self.player.task_reward * self.group.a_takes), 2)
+        available = round(self.player.task_reward - (self.player.task_reward * self.group.a_takes), 1)
         if self.group.price_method == 'WTA':
-            return [x * 0.5 for x in range(0, 10 + 1)]
+            return [x * 0.5 for x in range(0, 10 + 1, 15)]
         if self.group.price_method == 'WTP':
             print(available)
             new_available = int(available * 100)
             print(new_available)
             # return [x * 0.5 for x in range(0, 10 + 1)]
-            return [x / 100 for x in range(0, new_available + 1)]
-        # return range(0, self.player.task_reward, 1)
+            return_values = [float(format(x * .01, '.2f')) for x in range(0, new_available, 10)]
+            # return_values = [Decimal(round(x * .01, 1)) for x in range(0, new_available, 10)]
+            print(return_values)
+            return return_values
+            # return range(0, self.player.task_reward, 1)
 
     def b_willing_max(self):
         if self.group.price_method == "WTA":

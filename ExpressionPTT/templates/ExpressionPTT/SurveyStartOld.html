@@ -8,12 +8,10 @@
 {% block styles %}
 <link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <style type="text/css">
-    .table_wrap{
-        margin-left: -200px;
-    }
     .bid-slider {
         margin: .5em auto;
     }
+
     .bid {
         text-align: center;
     }
@@ -25,6 +23,7 @@
         color:#f6931f;
         font-weight:bold;
     }
+
     .payoff {
         margin: 1.5em 0;
     }
@@ -105,15 +104,16 @@ jQuery(document).ready(function ($) {
 {% endblock %}
 
 {% block content %}
+    <div class="form-group required">
 
+            <div class="controls">
 
-    <div >
             <div class="row">
                 <div class="col-md-2">(<span class="slide1" ></span>) Good-mood </div>
                 <div class="col-md-8" id="slide1"></div>
                 <div class="col-md-2">Bad-mood (<span class="slide1x" id="slide1text" type="hidden" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseA" id="id_slide1text" value="0">
+                <input type="hidden" name="survey_response0" id="id_slide1text" value="0">
             </div>
 
             <div class="row">
@@ -121,7 +121,7 @@ jQuery(document).ready(function ($) {
                 <div class="col-md-8" id="slide2"></div>
                 <div class="col-md-2">Sad(<span class="slide2x"  type="hidden" id="slide2text" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseB" id="id_slide2text" value="0">
+                <input type="hidden" name="survey_response1" id="id_slide2text" value="0">
             </div>
 
             <div class="row">
@@ -129,7 +129,7 @@ jQuery(document).ready(function ($) {
                 <div class="col-md-8" id="slide3"></div>
                 <div class="col-md-2">Depressed (<span class="slide3x"  type="hidden" id="slide3text" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseC" id="id_slide3text" value="0">
+                <input type="hidden" name="survey_response2" id="id_slide3text" value="0">
             </div>
 
             <div class="row">
@@ -137,7 +137,7 @@ jQuery(document).ready(function ($) {
                 <div class="col-md-8" id="slide4"></div>
                 <div class="col-md-2">gloomy(<span class="slide4x"  type="hidden" id="slide4text" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseD" id="id_slide4text" value="0">
+                <input type="hidden" name="survey_response3" id="id_slide4text" value="0">
             </div>
 
             <div class="row">
@@ -145,7 +145,7 @@ jQuery(document).ready(function ($) {
                 <div class="col-md-8" id="slide5"></div>
                 <div class="col-md-2">Displeased (<span class="slide5x"  type="hidden" id="slide5text" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseE" id="id_slide5text" value="0">
+                <input type="hidden" name="survey_response4" id="id_slide5text" value="0">
             </div>
 
             <div class="row">
@@ -153,11 +153,19 @@ jQuery(document).ready(function ($) {
                 <div class="col-md-8" id="slide6"></div>
                 <div class="col-md-2">Sorrowful (<span class="slide6x"  type="hidden" id="slide6text" readonly ></span>)</div>
                 <br>
-                <input type="hidden" name="survey_responseF"  id="id_slide6text" value="0">
+                <input type="hidden" name="survey_response5"  id="id_slide6text" value="0">
+            </div>
             </div>
     </div>
 
-    <div id="hideNext"  style=" display: none;">
+
+        </div>
+    </div>
+    <div id="hideNext"  style="margin-left: 300px; display: none;">
         {% next_button %}
     </div>
+
+{% if subsession.debug_mode == True %}
+{% next_button %}
+{% endif %}
 {% endblock %}

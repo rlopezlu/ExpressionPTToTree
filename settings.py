@@ -203,6 +203,13 @@ SESSION_CONFIGS = [
         'priceDisplay': ['LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
         'debug': True
+    },
+    {
+        'name': 'Batson_Survey',
+        'display_name': 'Batson 1988 Survey',
+        'num_demo_participants': 1,
+        'app_sequence': ['batson_emo_survey'],
+        'debug': False
     }
 ]
 

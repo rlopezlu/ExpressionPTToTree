@@ -149,7 +149,7 @@ SESSION_CONFIGS = [
         'priceDisplay': ['LIST', 'LIST', 'LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
-        'debug': True
+        'debug': False
     },
     {
         'name': 'ExpressionPTT22',

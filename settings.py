@@ -149,7 +149,25 @@ SESSION_CONFIGS = [
         'priceDisplay': ['LIST', 'LIST', 'LIST', 'LIST'],
         'app_sequence': ['ExpressionPTT', 'payment_info'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
-        'debug': True
+        'debug': False
+    },
+    {
+        'name': 'ExpressionPTT_DM_CONT_WTP',
+        'display_name': "ExpressionPTT_DM_CONT_WTP",
+        'real_world_currency_per_point': 2,
+        'num_demo_participants': 2,
+        'treatment': ['DM'],
+        'targetIncome': [9],
+        'price': [2],
+        'endowment': [3],
+        'group': [[1, 2]],
+        'role': [['A', 'B']],
+        'readerSelection': [0],
+        'method': ['WTP'],
+        'priceDisplay': ['CONT'],
+        'app_sequence': ['ExpressionPTT', 'payment_info'],
+        'video': "youtube.com/watch?v=YgdR5FvnNPc",
+        'debug': False
     },
     {
         'name': 'ExpressionPTT22',

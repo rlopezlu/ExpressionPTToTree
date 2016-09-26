@@ -2,16 +2,16 @@
 
 
 {% block styles %}
-<link href="{% static "vickrey_auction/jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
+<link href="{% static "jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <link rel = "stylesheet" href ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style type="text/css">
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
-}
+
 </style>
 
+{% endblock %}
 
-
+{% block title%}
+Real Task
 {% endblock %}
 
 {% block scripts %}
@@ -28,67 +28,55 @@ jQuery(document).ready(function ($) {
     $("#hideNext").hide();
 });
 </script>
-<script type="text/javascript" src="{% static "vickrey_auction/ang/start.js" %}"></script>
-<input id = 'type'  type = "text" value = 'game' style = 'display: none;'>
+<script type="text/javascript" src="{% static "jsFiles/start.js" %}"></script>
+
 
 {% endblock %}
 
 
 {% block content %}
 <input id = 'target'  type = "number" value = {{group.target_income}} style = 'display: none;'>
+<input id = 'type'  type = "text" value = 'game' style = 'display: none;'>
 
 <div ng-app="Game" >
-    <div ng-controller="gameController" ng-cloak>
+    <div ng-controller="gameController" ng-init = showgame()>
         <div class="form-group required">
             <div class="controls">
                 <input type="hidden" name="task_reward" id="task_reward" value="0">
             </div>
         </div>
+
+        <h3 class = text-center>The following is a real task.</h3>
+            <h3 class = text-center>The following tasks DOES count towards your income.
+        </h3>
+
+         <h3 class="text-center" >So far, your income is $<span ng-bind="parsedIncome"></span>.
+              The current task can earn you a maximum of <span ng-bind="maxpoints"></span> points.
+              </h3>
                     <!-- real tasks -->
           <div class="container" ng-show="showpage.beforeGame">
             <div class="row">
-              <div class="text-center">
-                <h3>Practice screens are over.<br>
-                  The following tasks do count towards your income.
-                </h3>
-                <div class="text-center">
-                  <button type="button" class="btn btn-info" ng-click="showgame()">
-                    Continue
-                  </button>
-                </div>
-              </div>
+
             </div>
           </div>
 
           <!-- income earning -->
-          <div class="container" ng-show="showpage.game" ng-cloak>
-            <div class="row" ng-show="showpage.setup">
-              <div class="col-md-3 col-md-offset-0" ng-show="showpage.setup">
-                <h3>Search Task <span ng-bind="task"></span></h3>
-              </div>
-              <div class="col-md-3">
-                <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
-                  data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
-                  the yellow circle (in the left graph) and search for the location that gives you the highest
-                  score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-                  The assigned time is 35 seconds. You can try as many points as you want." data-placement="bottom">
-                  ?
-                </button>
+          <div class="container" >
+            <div class="row" >
+              <div class="col-md-3" >
               </div>
             </div>
+
+
             <div class="row">
-              <!--
-              <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
-              -->
-              <h3 ng-show="showpage.setup" class="text-center" >So far, your income is $<span ng-bind="parsedIncome"></span>.
-              The current task can earn you a maximum of <span ng-bind="maxpoints"></span> points.
-              </h3>
+
+
             </div>
             <br><br>
             <div class="row">
               <div class="col-md-6">
                 <div class="row">
-                  <div class="col-md-5 col-md-offset-1 text-right">
+                  <div class="col-md-5 text-left">
                     <h4 id="nearness" class="text-center"></h4>
                   </div>
                   <div class="col-md-4">
@@ -135,18 +123,21 @@ jQuery(document).ready(function ($) {
             </div>
           </div>
 
+        <h4>Use the <em>left-click</em> of the mouse to <em>move</em>
+                  the yellow circle (in the left graph) and search for the location that gives you the highest
+                  score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
+                  The assigned time is 35 seconds. You can try as many points as you want.</h4>
+
     </div>
 </div>
 
         <div id="hideNext" style="display: none;">
-        <h3> Done with Task.</h3>
+        <h3> Done with practice.</h3>
+        <h3> Continue to real task.</h3>
         <br>
-        {% next_button %}
-
-
-
-</div>
-
+        <p></p>
+        {% next_button %} </h3>
+        </div>
 {% if subsession.debug_mode == True %}
 {% next_button %}
 {% endif %}

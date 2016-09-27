@@ -16,6 +16,7 @@ class Part1Game (Page):
     form_fields = ['task_reward']
 
     def before_next_page(self):
+        self.participant.vars['task_income'] = self.player.task_reward
         print('got to before')
         if self.subsession.debug_mode:
             self.player.task_reward = random.uniform(1, 5)
@@ -340,8 +341,8 @@ page_sequence = [
     SurveyWaitPage,
     Part1,
     Video,
-    PracticeGame,
-    Part1Game,
+#    PracticeGame,
+#    Part1Game,
     Part1Result,
     Part1Wait,
     Part2,

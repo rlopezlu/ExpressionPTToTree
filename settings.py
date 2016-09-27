@@ -165,7 +165,7 @@ SESSION_CONFIGS = [
         'readerSelection': [0],
         'method': ['WTP'],
         'priceDisplay': ['CONT'],
-        'app_sequence': ['ExpressionPTT', 'payment_info'],
+        'app_sequence': ['searchTask', 'ExpressionPTT', 'payment_info'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
         'debug': False
     },

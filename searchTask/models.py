@@ -18,11 +18,20 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    def before_session_starts(self):
+        group_matrix = []
+        for grouping in self.session.config["group"]:
+            print(grouping)
+            # assigns groups based on array values in cofig
+            group_matrix.append(grouping)
+        self.set_group_matrix(group_matrix)
+        i = 0
+        for groupx in self.get_groups():
+            groupx.target_income = self.session.config['targetIncome'][i]
 
 
 class Group(BaseGroup):
-    pass
+    target_income = models.DecimalField(max_digits=5, decimal_places=2)
 
 
 class Player(BasePlayer):

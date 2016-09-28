@@ -16,7 +16,7 @@ class Part1Game (Page):
     form_fields = ['task_reward']
 
     def before_next_page(self):
-        self.participant.vars['task_income'] = self.player.task_reward
+        #self.participant.vars['task_income'] = self.player.task_reward
         print('got to before')
         if self.subsession.debug_mode:
             self.player.task_reward = random.uniform(1, 5)
@@ -55,7 +55,10 @@ class SurveyWaitPage (WaitPage):
 
 
 class Part1 (Page):
-    pass
+    def before_next_page(self):
+        self.player.task_reward = self.player.participant.vars['task_income']
+        self.player.intermediate_reward = self.player.participant.vars['task_income'] + self.group.treatment_endowment
+
 
 
 class Video(Page):
@@ -69,8 +72,12 @@ class Part1Result(Page):
         return not self.subsession.debug_mode
 
     def vars_for_template(self):
-        return {'reward': self.player.task_reward}
-    pass
+        return {'reward': self.participant.vars['task_income'],
+                'total': self.participant.vars['task_income'] + self.group.treatment_endowment}
+
+    def before_next_page(self):
+        self.player.task_reward = self.participant.vars['task_income']
+
 
 
 class Part1Wait(WaitPage):
@@ -337,7 +344,7 @@ class ThankYou (Page):
 
 
 page_sequence = [
-    SurveyStart,
+    #SurveyStart,
     SurveyWaitPage,
     Part1,
     Video,

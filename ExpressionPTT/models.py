@@ -60,8 +60,10 @@ class Subsession(BaseSubsession):
             groupx.target_income = self.session.config['targetIncome'][i]
             groupx.reader_index = self.session.config['readerSelection'][i]
             groupx.price_method = self.session.config['method'][i]
-            for player in groupx.get_players():
-                player.p_role = self.session.config['role'][i][player.id_in_group-1]
+            for user in groupx.get_players():
+                user.p_role = self.session.config['role'][i][user.id_in_group-1]
+                # user.task_reward = user.participant.vars['task_income']
+                # user.intermediate_reward = user.participant.vars['task_income'] + groupx.treatment_endowment
 
             if groupx.treatment_treatment == 'FM':
                 groupx.b_eligible = True

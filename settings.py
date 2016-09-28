@@ -210,7 +210,15 @@ SESSION_CONFIGS = [
         'num_demo_participants': 1,
         'app_sequence': ['batson_emo_survey'],
         'debug': False
+    },
+    {
+        'name': 'searchTask',
+        'display_name': 'searchTask',
+        'num_demo_participants': 1,
+        'app_sequence': ['searchTask'],
+        'debug': False
     }
+
 ]
 
 # don't put anything after this point.

@@ -165,7 +165,7 @@ SESSION_CONFIGS = [
         'readerSelection': [0],
         'method': ['WTP'],
         'priceDisplay': ['CONT'],
-        'app_sequence': ['batson_emo_survey', 'searchTask', 'ExpressionPTT', 'batson_emo_survey'],
+        'app_sequence': ['batson_emo_survey', 'searchTask', 'ExpressionPTT'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
         'debug': False
     },

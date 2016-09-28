@@ -157,7 +157,7 @@ SESSION_CONFIGS = [
         'real_world_currency_per_point': 2,
         'num_demo_participants': 2,
         'treatment': ['DM'],
-        'targetIncome': [9],
+        'targetIncome': [4],
         'price': [2],
         'endowment': [3],
         'group': [[1, 2]],
@@ -165,7 +165,7 @@ SESSION_CONFIGS = [
         'readerSelection': [0],
         'method': ['WTP'],
         'priceDisplay': ['CONT'],
-        'app_sequence': ['searchTask', 'ExpressionPTT', 'payment_info'],
+        'app_sequence': ['batson_emo_survey', 'searchTask', 'ExpressionPTT', 'batson_emo_survey'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
         'debug': False
     },

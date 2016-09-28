@@ -36,11 +36,15 @@ jQuery(document).ready(function ($) {
 
 {% block content %}
 
-<input id = 'target' type = "number" value = {{group.target_income}} style = 'display: none;'>
-<input id = 'type'  type = "text" value = 'practice' style = 'display: none;'>
+
 
 <div ng-app="Game" >
-    <div ng-controller="gameController" ng-init = showgame()>
+
+
+    <div ng-controller="gameController" ng-init = "showgame()">
+
+        <input id = 'target' type = "number" value = {{group.target_income}} style = 'display: none;'>
+        <input id = 'type'  type = "text" value = 'practice' style = 'display: none;'>
         <div class="form-group required">
             <div class="controls">
                 <input type="hidden" name="task_reward" id="task_reward" value="0">

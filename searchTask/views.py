@@ -14,7 +14,7 @@ class SearchTask(Page):
 
     def before_next_page(self):
         self.participant.vars['task_income'] = self.player.task_reward
-        self.player.intermediate_reward = self.player.task_reward + self.group.treatment_endowment
+        # self.player.intermediate_reward = self.player.task_reward + self.group.treatment_endowment
 
 
 class PracticeTask(Page):

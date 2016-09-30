@@ -167,7 +167,7 @@ SESSION_CONFIGS = [
         'priceDisplay': ['CONT'],
         'app_sequence': ['batson_emo_survey', 'searchTask', 'ExpressionPTT'],
         'video': "youtube.com/watch?v=YgdR5FvnNPc",
-        'debug': False
+        'debug': True
     },
     {
         'name': 'ExpressionPTT22',
@@ -217,7 +217,7 @@ SESSION_CONFIGS = [
         'num_demo_participants': 4,
         'app_sequence': ['searchTask'],
         'debug': True,
-        'targetIncome': [4]
+        'targetIncome': [1.5]
     }
 ]
 

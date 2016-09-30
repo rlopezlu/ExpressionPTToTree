@@ -5,6 +5,10 @@
 <link href="{% static "jquery-ui/jquery-ui.min.css" %}" rel="stylesheet">
 <link rel = "stylesheet" href ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <style type="text/css">
+.instructions{
+    margin-top: 25px;
+    border: 1px solid darkgray ;
+}
 
 </style>
 
@@ -35,11 +39,11 @@ jQuery(document).ready(function ($) {
 
 
 {% block content %}
-<input id = 'target'  type = "number" value = {{group.target_income}} style = 'display: none;'>
+<input id = 'target'  type = "number" value = {{player.target_income}} style = 'display: none;'>
 <input id = 'type'  type = "text" value = 'game' style = 'display: none;'>
 
 <div ng-app="Game" >
-    <div ng-controller="gameController" ng-init = showgame()>
+    <div ng-controller="gameController" ng-init = showgame() ng-show="showpage.game">
         <div class="form-group required">
             <div class="controls">
                 <input type="hidden" name="task_reward" id="task_reward" value="0">
@@ -122,8 +126,8 @@ jQuery(document).ready(function ($) {
               </div>
             </div>
           </div>
-
-        <h4>Use the <em>left-click</em> of the mouse to <em>move</em>
+        {% include 'searchTask/GameInstructions.html' %}
+        <h4 ng-show="false" class="instructions">Use the <em>left-click</em> of the mouse to <em>move</em>
                   the yellow circle (in the left graph) and search for the location that gives you the highest
                   score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
                   The assigned time is 35 seconds. You can try as many points as you want.</h4>
@@ -132,8 +136,8 @@ jQuery(document).ready(function ($) {
 </div>
 
         <div id="hideNext" style="display: none;">
-        <h3> Done with practice.</h3>
-        <h3> Continue to real task.</h3>
+        <h3> Done with task.</h3>
+        <h3> Continue to rest of experiment.</h3>
         <br>
         <p></p>
         {% next_button %} </h3>

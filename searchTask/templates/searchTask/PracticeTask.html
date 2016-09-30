@@ -44,7 +44,7 @@ Trial Task
 <div ng-app="Game" >
 
 
-    <div ng-controller="gameController" ng-init = "showgame()">
+    <div ng-controller="gameController" ng-init = "showgame()" ng-show="showpage.game">
 
         <input id = 'target' type = "number" value = {{player.target_income}} style = 'display: none;'>
         <input id = 'type'  type = "text" value = 'practice' style = 'display: none;'>
@@ -62,7 +62,7 @@ Trial Task
               The current task can earn you a maximum of <span ng-bind="maxpoints"></span> points.
               </h3>
                     <!-- real tasks -->
-          <div class="container" ng-show="showpage.beforeGame">
+          <div class="container" ng-show="showpage.game">
             <div class="row">
 
             </div>
@@ -131,7 +131,8 @@ Trial Task
             </div>
           </div>
 
-        <h4>Use the <em>left-click</em> of the mouse to <em>move</em>
+          {% include 'searchTask/GameInstructions.html' %}
+        <h4 ng-show="false">Use the <em>left-click</em> of the mouse to <em>move</em>
                   the yellow circle (in the left graph) and search for the location that gives you the highest
                   score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
                   The assigned time is 35 seconds. You can try as many points as you want.</h4>
@@ -139,7 +140,7 @@ Trial Task
     </div>
 </div>
 
-        <div id="hideNext" style="display: none;">
+        <div id="hideNext" style="display: none;" ng-if='showpage.afterGame'>
         <h3> Done with practice.</h3>
         <h3> Continue to real task.</h3>
         <br>

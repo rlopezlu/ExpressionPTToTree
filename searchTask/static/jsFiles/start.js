@@ -13,7 +13,8 @@ angular.module('Game', []).controller("gameController",
     $scope.showpage = {
         beforeGame: true,
         game: true,
-        setup: true
+        setup: true,
+        afterGame:false
     };
 
     $scope.income = 0;
@@ -62,13 +63,7 @@ angular.module('Game', []).controller("gameController",
         $scope.showpage.game = true;
         $scope.showpage.setup = true;
 
-      //start tooltip
-        /*
-      $('[data-toggle="instructions"]').popover({
-        html: true,
-        trigger: 'focus hover'
-      });
-*/
+
       $scope.points = [];
       $scope.plot = $.plot("#placeholder",[{
           data: $scope.points,
@@ -141,6 +136,7 @@ angular.module('Game', []).controller("gameController",
           $timeout.cancel($scope.mytimeout);
           console.log("done with game.");
           $scope.showpage.game = false;
+            $scope.showpage.afterGame = true;
             $("#hideNext").show();
           console.log("income : " + $scope.income);
             return;

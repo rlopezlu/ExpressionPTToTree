@@ -214,11 +214,11 @@ SESSION_CONFIGS = [
     {
         'name': 'searchTask',
         'display_name': 'searchTask',
-        'num_demo_participants': 1,
+        'num_demo_participants': 4,
         'app_sequence': ['searchTask'],
-        'debug': False
+        'debug': True,
+        'targetIncome': [4]
     }
-
 ]
 
 # don't put anything after this point.

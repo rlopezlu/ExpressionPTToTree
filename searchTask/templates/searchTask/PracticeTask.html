@@ -36,15 +36,17 @@ Trial Task
 
 
 {% block content %}
-
-
+    {% if subsession.debug_mode == True %}
+        <p>the goal is {{player.target_income}}</p>
+        <p>player id is {{player.id_in_group}}</p>
+    {% endif %}
 
 <div ng-app="Game" >
 
 
     <div ng-controller="gameController" ng-init = "showgame()">
 
-        <input id = 'target' type = "number" value = {{group.target_income}} style = 'display: none;'>
+        <input id = 'target' type = "number" value = {{player.target_income}} style = 'display: none;'>
         <input id = 'type'  type = "text" value = 'practice' style = 'display: none;'>
         <div class="form-group required">
             <div class="controls">

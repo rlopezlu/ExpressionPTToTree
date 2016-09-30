@@ -18,21 +18,24 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
+    debug_mode = models.BooleanField()
+
     def before_session_starts(self):
-        group_matrix = []
-        for grouping in self.session.config["group"]:
-            print(grouping)
-            # assigns groups based on array values in cofig
-            group_matrix.append(grouping)
-        self.set_group_matrix(group_matrix)
-        i = 0
-        for groupx in self.get_groups():
-            groupx.target_income = self.session.config['targetIncome'][i]
+        self.debug_mode = self.session.config['debug']
+        for person in self.get_players():
+            if 'targetIncome' in self.session.config:
+                if len(self.session.config['targetIncome']) > 1:
+                    person.target_income = self.session.config['targetIncome'][person.id_in_group -1]
+                elif len(self.session.config['targetIncome']) == 1:
+                    person.target_income = self.session.config['targetIncome'][0]
+            else:
+                person.target_income = 10
 
 
 class Group(BaseGroup):
-    target_income = models.DecimalField(max_digits=5, decimal_places=2)
+    pass
 
 
 class Player(BasePlayer):
     task_reward = models.DecimalField(max_digits=5, decimal_places=2)
+    target_income = models.DecimalField(max_digits=5, decimal_places=2)
